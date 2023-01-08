@@ -94,7 +94,7 @@ public class ProfileService {
         }
     }
 
-    public Iterable<ProfileDto>findAllProfiles() {
+    public List<ProfileDto>findAllProfiles() {
         Iterable<Profile> profilelist = repos.findAll();
         List<ProfileDto> profiledtolist = new ArrayList<>();
         for(Profile profile: profilelist) {
@@ -103,8 +103,8 @@ public class ProfileService {
         return profiledtolist;
     }
 
-    public Iterable<ProfileDto>findAllProfilesbyname(String name){
-        Iterable<Profile>profilenamelist = repos.findAllByName(name);
+    public List<ProfileDto>findAllProfilesbyname(String name){
+       List<Profile>profilenamelist = repos.findAllByName(name);
         List<ProfileDto>profiledtonamelist = new ArrayList<>();
         for(Profile profile: profilenamelist) {
             profiledtonamelist.add(ProfileDto.fromProfile(profile));

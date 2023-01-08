@@ -119,8 +119,8 @@ public class UserService {
         return newUser.getUsername();
     }
 
-    public void deleteUser(long id) {
-        repos.deleteById(id);
+    public void deleteUser(String username) {
+        repos.deleteByUsername(username);
     }
 
     public void updateUser(String username, UserDto newUser) throws Exception {

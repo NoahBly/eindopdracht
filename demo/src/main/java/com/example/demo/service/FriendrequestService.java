@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.dto.FriendrequestDto;
 import com.example.demo.dto.FriendrequestInputDto;
+import com.example.demo.dto.ProfileDto;
+import com.example.demo.dto.ProfileInputDto;
 import com.example.demo.exceptions.RecordNotFoundException;
 import com.example.demo.model.Friendrequest;
 import com.example.demo.model.Profile;
@@ -68,7 +70,7 @@ public class FriendrequestService {
     }
 
 
-    public Iterable<FriendrequestDto>findAllFriendrequestsbyProfile(long profileid) {
+    public List<FriendrequestDto>findAllFriendrequestsbyProfile(long profileid) {
         Optional<Profile> profile1 = repos2.findById(profileid);
 
         if (profile1.isEmpty()) {
@@ -120,27 +122,37 @@ public class FriendrequestService {
         }
     }
 
-    public List<Profile>getAllFriendsbyProfileID(long id) {
+    public List<ProfileDto>getAllFriendsbyProfileID(long id) {
         Optional<Profile>profile1 = repos2.findById(id);
         if(profile1.isEmpty()) {
             throw new RecordNotFoundException("ID can not be found");
         }else {
             Profile profile2 = repos2.findById(id).get();
             List<Profile> Friendlist = profile2.getFriendlist();
-            return Friendlist;
+            List<ProfileDto>Friendlist2 = new ArrayList<>();
+            for(Profile profile: Friendlist) {
+                Friendlist2.add(ProfileDto.fromProfile(profile));
+            }
+
+            return Friendlist2;
         }
     }
 
     public void deleteFriendbyID(long id, long id2) {
-        List<Profile> Friendlist = getAllFriendsbyProfileID(id);
+        List<ProfileDto> Friendlist = getAllFriendsbyProfileID(id);
+        List<Profile>Friendlist2 = new ArrayList<>();
+        for(ProfileDto profile: Friendlist) {
+            Friendlist2.add(ProfileInputDto.toProfile(profile));
+        }
+
         Optional<Profile> profile1 = repos2.findById(id2);
         if (profile1.isEmpty()) {
             throw new RecordNotFoundException("ID can not be found");
         } else {
             Profile profile2 = repos2.findById(id2).get();
-            Friendlist.remove(profile2);
+            Friendlist2.remove(profile2);
             Profile profile3 = repos2.findById(id).get();
-            profile3.setFriendlist(Friendlist);
+            profile3.setFriendlist(Friendlist2);
             repos2.save(profile3);
         }
     }

@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.dto.FollowrequestDto;
 import com.example.demo.dto.FriendrequestDto;
+import com.example.demo.dto.ProfileDto;
+import com.example.demo.dto.ProfileInputDto;
 import com.example.demo.exceptions.RecordNotFoundException;
 import com.example.demo.model.Followrequest;
 import com.example.demo.model.Friendrequest;
@@ -66,7 +68,7 @@ public class FollowrequestService {
 
 
 
-    public Iterable<FollowrequestDto>findAllFollowrequestsbyProfile(long profileid) {
+    public List<FollowrequestDto>findAllFollowrequestsbyProfile(long profileid) {
         Optional<Profile> profile1 = repos2.findById(profileid);
         if (profile1.isEmpty()) {
             throw new RecordNotFoundException("Cannot find id:" + profileid);
@@ -96,7 +98,7 @@ public class FollowrequestService {
 
 
 
-    public void acceptFollowdrequestbyID(long id) {
+    public void acceptFollowrequestbyID(long id) {
         Optional<Followrequest> followrequest1 = repos.findById(id);
 
         if (followrequest1.isEmpty()) {
@@ -122,58 +124,76 @@ public class FollowrequestService {
 
 
 
-    public List<Profile>getAllFollowersbyProfileID(long id) {
+    public List<ProfileDto>getAllFollowersbyProfileID(long id) {
         Optional<Profile> profile1 = repos2.findById(id);
         if(profile1.isEmpty()) {
             throw new RecordNotFoundException("ID can not be found");
         }else {
             Profile profile2 = repos2.findById(id).get();
             List<Profile> Followerslist = profile2.getFollowerslist();
-            return Followerslist;
+            List<ProfileDto> Followerslist2 = new ArrayList<>();
+            for(Profile profile: Followerslist) {
+                Followerslist2.add(ProfileDto.fromProfile(profile));
+            }
+            return Followerslist2;
         }
     }
 
 
 
     public void deleteFollowerbyID(long id, long id2) {
-        List<Profile> Followerslist = getAllFollowersbyProfileID(id);
+        List<ProfileDto> Followerslist = getAllFollowersbyProfileID(id);
+        List<Profile> Followerslist2 = new ArrayList<>();
+        for(ProfileDto profile: Followerslist) {
+            Followerslist2.add(ProfileInputDto.toProfile(profile));
+        }
+
         Optional<Profile> profile1 = repos2.findById(id2);
         if (profile1.isEmpty()) {
             throw new RecordNotFoundException("ID can not be found");
         } else {
             Profile profile2 = repos2.findById(id2).get();
-            Followerslist.remove(profile2);
+            Followerslist2.remove(profile2);
             Profile profile3 = repos2.findById(id).get();
-            profile3.setFollowerslist(Followerslist);
+            profile3.setFollowerslist(Followerslist2);
             repos2.save(profile3);
         }
     }
 
 
 
-    public List<Profile>getAllFollowingsbyProfileID(long id) {
+    public List<ProfileDto>getAllFollowingsbyProfileID(long id) {
         Optional<Profile>profile1 = repos2.findById(id);
         if(profile1.isEmpty()) {
             throw new RecordNotFoundException("ID can not be found");
         }else {
             Profile profile2 = repos2.findById(id).get();
             List<Profile> Followinglist = profile2.getFollowinglist();
-            return Followinglist;
+            List<ProfileDto> Followinglist2 = new ArrayList<>();
+            for(Profile profile: Followinglist) {
+                Followinglist2.add(ProfileDto.fromProfile(profile));
+            }
+            return Followinglist2;
         }
     }
 
 
 
     public void deleteFollowingbyID(long id, long id2) {
-        List<Profile> Followinglist = getAllFollowingsbyProfileID(id);
+        List<ProfileDto> Followinglist = getAllFollowingsbyProfileID(id);
+        List<Profile> Followinglist2 = new ArrayList<>();
+        for(ProfileDto profile: Followinglist) {
+            Followinglist2.add(ProfileInputDto.toProfile(profile));
+        }
+
         Optional<Profile> profile1 = repos2.findById(id2);
         if (profile1.isEmpty()) {
             throw new RecordNotFoundException("ID can not be found");
         } else {
             Profile profile2 = repos2.findById(id2).get();
-            Followinglist.remove(profile2);
+            Followinglist2.remove(profile2);
             Profile profile3 = repos2.findById(id).get();
-            profile3.setFriendlist(Followinglist);
+            profile3.setFollowinglist(Followinglist2);
             repos2.save(profile3);
         }
     }
