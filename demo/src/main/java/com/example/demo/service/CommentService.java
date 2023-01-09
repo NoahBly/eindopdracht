@@ -8,8 +8,10 @@ import com.example.demo.model.Profile;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.ProfileRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +61,7 @@ public class CommentService {
         }
     }
 
-    public Iterable<CommentDto>findallCommentsbyPost(long postid) {
+    public List<CommentDto>findallCommentsbyPost(long postid) {
         Optional<Post> post1 = repos2.findById(postid);
         if (post1.isEmpty()) {
             throw new RecordNotFoundException("Cannot find id:" + postid);
@@ -80,11 +82,19 @@ public class CommentService {
 
 
 
-    public void deleteCommentbyid(long commentid, String profilereceivername) {
+    public void deleteCommentbyid(long commentid) {
+        Optional<Comment> comment1 = repos.findById(commentid);
+        if (comment1.isEmpty()) {
+            throw new RecordNotFoundException("Cannot find id:" + commentid);
+        } else {
+            Comment comment2 = repos.findById(commentid).get();
+            Principal principal = (Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String username = principal.getName();
+            if (username == comment2.getCommentmaker().getUser().getUsername() || username == comment2.getPost().getProfile().getUser().getUsername()) {
+                repos.deleteById(commentid);
+            }
+        }
 
 
     }
-
-
-
 }

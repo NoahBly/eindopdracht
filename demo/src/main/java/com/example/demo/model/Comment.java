@@ -21,6 +21,7 @@ public class Comment {
     @JoinColumn(name = "commentmaker_id")
     private Profile commentmaker;
 
+
     public Comment() {
     }
 
