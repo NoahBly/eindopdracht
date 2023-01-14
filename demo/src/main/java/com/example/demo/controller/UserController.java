@@ -7,6 +7,7 @@ import com.example.demo.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -28,10 +29,10 @@ public class UserController {
     }
 
     @PostMapping(value = "/normal")
-    public ResponseEntity<UserDto> createNormalUserProfile(@RequestBody CreateUserProfileDto dto) throws Exception{
+    public ResponseEntity<UserDto> createNormalUserProfile(@RequestBody CreateUserProfileDto dto, MultipartFile file) throws Exception{
         dto.setPassword(passwordEncoder.encode(dto.password));
 
-        String newUsername = userService.createNormalUser(dto);
+        String newUsername = userService.createNormalUser(dto,file);
         userService.addAuthority(newUsername, "ROLE_NORMAL_USER");
 
 
@@ -41,10 +42,10 @@ public class UserController {
     }
 
     @PostMapping(value = "/celebrity")
-    public ResponseEntity<UserDto> createCelebrityUserProfile(@RequestBody CreateUserProfileDto dto) throws Exception{
+    public ResponseEntity<UserDto> createCelebrityUserProfile(@RequestBody CreateUserProfileDto dto, @RequestBody MultipartFile file) throws Exception{
         dto.setPassword(passwordEncoder.encode(dto.password));
 
-        String newUsername = userService.createCelebUser(dto);
+        String newUsername = userService.createCelebUser(dto, file);
         userService.addAuthority(newUsername, "ROLE_CELEB_USER");
 
 
@@ -54,10 +55,10 @@ public class UserController {
     }
 
     @PostMapping(value = "/pageadmin")
-    public ResponseEntity<UserDto> createPageAdminUserProfile(@RequestBody CreateUserProfileDto dto) throws Exception{
+    public ResponseEntity<UserDto> createPageAdminUserProfile(@RequestBody CreateUserProfileDto dto, @RequestBody MultipartFile file) throws Exception{
         dto.setPassword(passwordEncoder.encode(dto.password));
 
-        String newUsername = userService.createPageAdminUser(dto);
+        String newUsername = userService.createPageAdminUser(dto, file);
         userService.addAuthority(newUsername, "ROLE_PAGE_ADMIN_USER");
 
 

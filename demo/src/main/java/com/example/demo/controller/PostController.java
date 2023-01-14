@@ -9,6 +9,7 @@ import com.example.demo.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,9 +26,9 @@ public class PostController {
 
 
     @PostMapping(value = "/{profileid}")
-    public ResponseEntity<Object> createPost(@PathVariable("profileid") long profileid, @RequestBody PostDto dto) throws Exception{
+    public ResponseEntity<Object> createPost(@PathVariable("profileid") long profileid, @RequestBody PostDto dto, @RequestBody MultipartFile file) throws Exception{
 
-        long postid = service.createPost(dto, profileid);
+        long postid = service.createPost(dto, profileid, file);
 
         return new ResponseEntity<>(postid, HttpStatus.CREATED);
 
@@ -52,7 +53,7 @@ public class PostController {
 
 
     @DeleteMapping(value = "/{postid}")
-    public ResponseEntity<Object> deletepost(@PathVariable("postid") long id) {
+    public ResponseEntity<Object> deletePost(@PathVariable("postid") long id) {
         service.deletePost(id);
         return ResponseEntity.noContent().build();
     }

@@ -15,7 +15,7 @@ public class Post {
     private String name;
 
     @Column(nullable = false, unique = false)
-    private byte[] imagevideo;
+    private String imagevideo;
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
@@ -27,7 +27,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(long id, String name, byte[] imagevideo, List<Comment> comments, Profile profile) {
+    public Post(long id, String name, String imagevideo, List<Comment> comments, Profile profile) {
         this.id = id;
         this.name = name;
         this.imagevideo = imagevideo;
@@ -51,11 +51,11 @@ public class Post {
         this.name = name;
     }
 
-    public byte[] getImagevideo() {
+    public String getImagevideo() {
         return imagevideo;
     }
 
-    public void setImagevideo(byte[] imagevideo) {
+    public void setImagevideo(String imagevideo) {
         this.imagevideo = imagevideo;
     }
 

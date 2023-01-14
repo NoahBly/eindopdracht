@@ -18,8 +18,8 @@ public class Profile {
     @Column(nullable = false, unique = false)
     private String name;
 
-    @Lob
-    private byte[] profileimage;
+
+    private String profileimage;
 
     @OneToMany
     private List<Profile> friendlist;
@@ -87,11 +87,11 @@ public class Profile {
         this.name = name;
     }
 
-    public byte[] getProfileimage() {
+    public String getProfileimage() {
         return profileimage;
     }
 
-    public void setProfileimage(byte[] profileimage) {
+    public void setProfileimage(String profileimage) {
         this.profileimage = profileimage;
     }
 

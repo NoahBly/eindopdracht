@@ -17,7 +17,7 @@ public class ProfileDto {
     public String name;
 
 
-    public byte[] profileimage;
+    public String profileimage;
 
     public List<Profile> friendlist;
    public List<Profile> followerslist;

@@ -17,7 +17,7 @@ public class ProfileInputDto {
     public String name;
 
 
-    public byte[] profileimage;
+    public String profileimage;
 
 
     public List<Followrequest> followrequests;

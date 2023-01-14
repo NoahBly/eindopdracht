@@ -15,7 +15,7 @@ public class PostInputDto {
     public String name;
 
     @NotBlank
-    public byte[] imagevideo;
+    public String imagevideo;
 
     public List<Comment> comments;
 

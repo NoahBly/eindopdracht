@@ -9,7 +9,13 @@ import com.example.demo.model.User;
 import com.example.demo.repository.ProfileRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,13 +30,30 @@ public class ProfileService {
         this.repos = repos;
         this.repos2 = repos2;
     }
+    private final Path root = Paths.get("uploads");
 
-    public ProfileDto createNormalProfile(CreateUserProfileDto profiledto) {
+    public ProfileDto createNormalProfile(CreateUserProfileDto profiledto, MultipartFile file) {
+        String filename = "";
+        long fileID = 0;
+        try {
+            Files.createDirectories(root);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not initialize folder for upload!");
+        }
+        try{
+            fileID = Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+            filename = file.getOriginalFilename();
+
+        } catch (Exception e) {
+            if (e instanceof FileAlreadyExistsException) {
+                throw new RuntimeException("A file of that name already exists.");
+            }
+        }
     Profile profile1 = new Profile();
 
     profile1.setName(profiledto.profilename);
     profile1.setType("NORMAL");
-    profile1.setProfileimage(profiledto.profileimage);
+    profile1.setProfileimage(filename);
 
     Profile profile2 = repos.save(profile1);
     ProfileDto profile3 = ProfileDto.fromProfile(profile2);
@@ -39,31 +62,65 @@ public class ProfileService {
 
     }
 
-    public ProfileDto createCelebrityProfile(CreateUserProfileDto profiledto) {
+    public ProfileDto createCelebrityProfile(CreateUserProfileDto profiledto, MultipartFile file) {
+        String filename = "";
+        long fileID = 0;
+        try {
+            Files.createDirectories(root);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not initialize folder for upload!");
+        }
+        try{
+            fileID = Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+            filename = file.getOriginalFilename();
+
+        } catch (Exception e) {
+            if (e instanceof FileAlreadyExistsException) {
+                throw new RuntimeException("A file of that name already exists.");
+            }
+        }
         Profile profile1 = new Profile();
 
         profile1.setName(profiledto.profilename);
-        profile1.setType("CELEB");
-        profile1.setProfileimage(profiledto.profileimage);
+        profile1.setType("NORMAL");
+        profile1.setProfileimage(filename);
 
         Profile profile2 = repos.save(profile1);
         ProfileDto profile3 = ProfileDto.fromProfile(profile2);
 
         return profile3;
+
 
     }
 
-    public ProfileDto createPageAdminProfile(CreateUserProfileDto profiledto) {
+    public ProfileDto createPageAdminProfile(CreateUserProfileDto profiledto, MultipartFile file) {
+        String filename = "";
+        long fileID = 0;
+        try {
+            Files.createDirectories(root);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not initialize folder for upload!");
+        }
+        try{
+            fileID = Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+            filename = file.getOriginalFilename();
+
+        } catch (Exception e) {
+            if (e instanceof FileAlreadyExistsException) {
+                throw new RuntimeException("A file of that name already exists.");
+            }
+        }
         Profile profile1 = new Profile();
 
         profile1.setName(profiledto.profilename);
-        profile1.setType("PAGEADMIN");
-        profile1.setProfileimage(profiledto.profileimage);
+        profile1.setType("NORMAL");
+        profile1.setProfileimage(filename);
 
         Profile profile2 = repos.save(profile1);
         ProfileDto profile3 = ProfileDto.fromProfile(profile2);
 
         return profile3;
+
 
     }
 

@@ -11,6 +11,7 @@ import com.example.demo.model.Profile;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,7 @@ public class UserService {
         return repos.existsById(id);
     }
 
-    public String createNormalUser(CreateUserProfileDto dto) {
+    public String createNormalUser(CreateUserProfileDto dto, MultipartFile file) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         dto.setApikey(randomString);
 
@@ -67,7 +68,7 @@ public class UserService {
         newUser.setEnabled(dto.enabled);
         newUser.setEmail(dto.email);
 
-        ProfileDto profile1 = profileservice.createNormalProfile(dto);
+        ProfileDto profile1 = profileservice.createNormalProfile(dto, file);
 
         newUser.setProfile(ProfileInputDto.toProfile(profile1));
 
@@ -77,7 +78,7 @@ public class UserService {
         return newUser.getUsername();
     }
 
-    public String createCelebUser(CreateUserProfileDto dto) {
+    public String createCelebUser(CreateUserProfileDto dto, MultipartFile file) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         dto.setApikey(randomString);
 
@@ -88,7 +89,7 @@ public class UserService {
         newUser.setEnabled(dto.enabled);
         newUser.setEmail(dto.email);
 
-        ProfileDto profile1 = profileservice.createCelebrityProfile(dto);
+        ProfileDto profile1 = profileservice.createCelebrityProfile(dto, file);
 
         newUser.setProfile(ProfileInputDto.toProfile(profile1));
 
@@ -98,7 +99,7 @@ public class UserService {
         return newUser.getUsername();
     }
 
-    public String createPageAdminUser(CreateUserProfileDto dto) {
+    public String createPageAdminUser(CreateUserProfileDto dto, MultipartFile file) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         dto.setApikey(randomString);
 
@@ -109,7 +110,7 @@ public class UserService {
         newUser.setEnabled(dto.enabled);
         newUser.setEmail(dto.email);
 
-        ProfileDto profile1 = profileservice.createPageAdminProfile(dto);
+        ProfileDto profile1 = profileservice.createPageAdminProfile(dto, file);
 
         newUser.setProfile(ProfileInputDto.toProfile(profile1));
 

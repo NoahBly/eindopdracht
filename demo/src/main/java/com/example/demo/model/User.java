@@ -10,7 +10,7 @@ import java.util.Set;
 public class User {
 
     @Id
-@GeneratedValue
+@GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @Column(nullable = false, unique = true)

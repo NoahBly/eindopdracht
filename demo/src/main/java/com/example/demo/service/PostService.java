@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.Interface.InterfcFilesStorageService;
 import com.example.demo.dto.PostDto;
 import com.example.demo.dto.ProfileDto;
 import com.example.demo.exceptions.RecordNotFoundException;
@@ -8,7 +9,13 @@ import com.example.demo.model.Profile;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.ProfileRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,17 +31,38 @@ public class PostService {
         this.repos2 = repos2;
     }
 
-    public long createPost(PostDto postdto, long profileid) {
+    private final Path root = Paths.get("uploads");
+
+    public long createPost(PostDto postdto, long profileid, MultipartFile file) {
+       // we moeten dit hier doen om de file te kunnen opslaan in de post.
+        String filename = "";
+        long fileID = 0;
+        try {
+            Files.createDirectories(root);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not initialize folder for upload!");
+        }
+        try{
+        fileID = Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+        filename = file.getOriginalFilename();
+
+        } catch (Exception e) {
+            if (e instanceof FileAlreadyExistsException) {
+                throw new RuntimeException("A file of that name already exists.");
+            }
+        }
+
         Post post1 = new Post();
         Profile profile1 = repos2.findById(profileid).get();
         post1.setName(postdto.name);
-        post1.setImagevideo(postdto.imagevideo);
+        post1.setImagevideo(filename);
         Post post2 = repos.save(post1);
-        List<Post>profileposts = new ArrayList<>(profile1.getPosts());
+        List<Post> profileposts = new ArrayList<>(profile1.getPosts());
         profileposts.add(post2);
         profile1.setPosts(profileposts);
         repos2.save(profile1);
         return post2.getId();
+
     }
 
     public PostDto getPostbyID(long postid) {
