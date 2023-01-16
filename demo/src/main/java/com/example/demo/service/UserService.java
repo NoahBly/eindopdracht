@@ -66,7 +66,7 @@ public class UserService {
         newUser.setApikey(randomString);
         newUser.setUsername(dto.username);
         newUser.setPassword(dto.password);
-        newUser.setEnabled(dto.enabled);
+
         newUser.setEmail(dto.email);
 
         Profile profile1 = profileservice.createNormalProfile(dto);
@@ -87,7 +87,7 @@ public class UserService {
         newUser.setApikey(randomString);
         newUser.setUsername(dto.username);
         newUser.setPassword(dto.password);
-        newUser.setEnabled(dto.enabled);
+
         newUser.setEmail(dto.email);
 
         Profile profile1 = profileservice.createCelebrityProfile(dto);
@@ -108,7 +108,7 @@ public class UserService {
         newUser.setApikey(randomString);
         newUser.setUsername(dto.username);
         newUser.setPassword(dto.password);
-        newUser.setEnabled(dto.enabled);
+
         newUser.setEmail(dto.email);
 
         Profile profile1 = profileservice.createPageAdminProfile(dto);
