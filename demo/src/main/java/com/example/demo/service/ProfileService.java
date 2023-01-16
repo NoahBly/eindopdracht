@@ -32,98 +32,84 @@ public class ProfileService {
     }
     private final Path root = Paths.get("uploads");
 
-    public ProfileDto createNormalProfile(CreateUserProfileDto profiledto, MultipartFile file) {
-        String filename = "";
-        long fileID = 0;
-        try {
-            Files.createDirectories(root);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not initialize folder for upload!");
-        }
-        try{
-            fileID = Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
-            filename = file.getOriginalFilename();
+    public Profile createNormalProfile(CreateUserProfileDto profiledto) {
 
-        } catch (Exception e) {
-            if (e instanceof FileAlreadyExistsException) {
-                throw new RuntimeException("A file of that name already exists.");
-            }
-        }
+
     Profile profile1 = new Profile();
 
     profile1.setName(profiledto.profilename);
     profile1.setType("NORMAL");
-    profile1.setProfileimage(filename);
+
 
     Profile profile2 = repos.save(profile1);
-    ProfileDto profile3 = ProfileDto.fromProfile(profile2);
 
-    return profile3;
+
+    return profile2;
 
     }
 
-    public ProfileDto createCelebrityProfile(CreateUserProfileDto profiledto, MultipartFile file) {
-        String filename = "";
-        long fileID = 0;
-        try {
-            Files.createDirectories(root);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not initialize folder for upload!");
-        }
-        try{
-            fileID = Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
-            filename = file.getOriginalFilename();
+    public Profile createCelebrityProfile(CreateUserProfileDto profiledto) {
 
-        } catch (Exception e) {
-            if (e instanceof FileAlreadyExistsException) {
-                throw new RuntimeException("A file of that name already exists.");
-            }
-        }
+
         Profile profile1 = new Profile();
 
         profile1.setName(profiledto.profilename);
         profile1.setType("NORMAL");
-        profile1.setProfileimage(filename);
+
 
         Profile profile2 = repos.save(profile1);
-        ProfileDto profile3 = ProfileDto.fromProfile(profile2);
 
-        return profile3;
+
+        return profile2;
 
 
     }
 
-    public ProfileDto createPageAdminProfile(CreateUserProfileDto profiledto, MultipartFile file) {
-        String filename = "";
-        long fileID = 0;
-        try {
-            Files.createDirectories(root);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not initialize folder for upload!");
-        }
-        try{
-            fileID = Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
-            filename = file.getOriginalFilename();
+    public Profile createPageAdminProfile(CreateUserProfileDto profiledto) {
 
-        } catch (Exception e) {
-            if (e instanceof FileAlreadyExistsException) {
-                throw new RuntimeException("A file of that name already exists.");
-            }
-        }
         Profile profile1 = new Profile();
 
         profile1.setName(profiledto.profilename);
         profile1.setType("NORMAL");
-        profile1.setProfileimage(filename);
+
 
         Profile profile2 = repos.save(profile1);
-        ProfileDto profile3 = ProfileDto.fromProfile(profile2);
 
-        return profile3;
+
+        return profile2;
 
 
     }
+    public String addProfileimage(long profileid,MultipartFile file) {
 
+        String filename = "";
+        long fileID = 0;
+        Profile newProfile = null;
+        Optional<Profile> profile = repos.findById(profileid);
+
+        if (profile.isEmpty()) {
+            throw new RecordNotFoundException("ID can not be found");
+        } else {
+             newProfile = repos.findById(profileid).get();
+
+            try {
+                Files.createDirectories(root);
+            } catch (IOException e) {
+                throw new RuntimeException("Could not initialize folder for upload!");
+            }
+            try {
+                fileID = Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+                filename = file.getOriginalFilename();
+
+            } catch (Exception e) {
+                if (e instanceof FileAlreadyExistsException) {
+                    throw new RuntimeException("A file of that name already exists.");
+                }
+            }
+        } newProfile.setProfileimage(filename);
+        repos.save(newProfile);
+        return filename;
+    }
 
     public ProfileDto getProfilebyID(long profileid) {
         Optional<Profile> profile = repos.findById(profileid);

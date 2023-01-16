@@ -29,10 +29,11 @@ public class UserController {
     }
 
     @PostMapping(value = "/normal")
-    public ResponseEntity<UserDto> createNormalUserProfile(@RequestBody CreateUserProfileDto dto, MultipartFile file) throws Exception{
+    public ResponseEntity<UserDto> createNormalUserProfile(@RequestBody CreateUserProfileDto dto) throws Exception{
+
         dto.setPassword(passwordEncoder.encode(dto.password));
 
-        String newUsername = userService.createNormalUser(dto,file);
+        String newUsername = userService.createNormalUser(dto);
         userService.addAuthority(newUsername, "ROLE_NORMAL_USER");
 
 
@@ -42,10 +43,10 @@ public class UserController {
     }
 
     @PostMapping(value = "/celebrity")
-    public ResponseEntity<UserDto> createCelebrityUserProfile(@RequestBody CreateUserProfileDto dto, @RequestBody MultipartFile file) throws Exception{
+    public ResponseEntity<UserDto> createCelebrityUserProfile(@RequestParam("userprofile") CreateUserProfileDto dto) throws Exception{
         dto.setPassword(passwordEncoder.encode(dto.password));
 
-        String newUsername = userService.createCelebUser(dto, file);
+        String newUsername = userService.createCelebUser(dto);
         userService.addAuthority(newUsername, "ROLE_CELEB_USER");
 
 
@@ -55,10 +56,10 @@ public class UserController {
     }
 
     @PostMapping(value = "/pageadmin")
-    public ResponseEntity<UserDto> createPageAdminUserProfile(@RequestBody CreateUserProfileDto dto, @RequestBody MultipartFile file) throws Exception{
+    public ResponseEntity<UserDto> createPageAdminUserProfile(@RequestParam("userprofile") CreateUserProfileDto dto) throws Exception{
         dto.setPassword(passwordEncoder.encode(dto.password));
 
-        String newUsername = userService.createPageAdminUser(dto, file);
+        String newUsername = userService.createPageAdminUser(dto);
         userService.addAuthority(newUsername, "ROLE_PAGE_ADMIN_USER");
 
 

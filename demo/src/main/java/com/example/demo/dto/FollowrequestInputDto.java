@@ -3,7 +3,7 @@ package com.example.demo.dto;
 import com.example.demo.model.Followrequest;
 import com.example.demo.model.Friendrequest;
 import com.example.demo.model.Profile;
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 public class FollowrequestInputDto {
 

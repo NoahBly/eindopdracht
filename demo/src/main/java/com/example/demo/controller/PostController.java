@@ -26,7 +26,7 @@ public class PostController {
 
 
     @PostMapping(value = "/{profileid}")
-    public ResponseEntity<Object> createPost(@PathVariable("profileid") long profileid, @RequestBody PostDto dto, @RequestBody MultipartFile file) throws Exception{
+    public ResponseEntity<Object> createPost(@PathVariable("profileid") long profileid, @RequestParam("post") PostDto dto, @RequestParam("file") MultipartFile file) throws Exception{
 
         long postid = service.createPost(dto, profileid, file);
 

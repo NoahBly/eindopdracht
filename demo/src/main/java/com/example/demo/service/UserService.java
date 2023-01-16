@@ -29,8 +29,9 @@ public class UserService {
 
 
 
-    public UserService(UserRepository repos) {
+    public UserService(UserRepository repos,ProfileService profileservice) {
         this.repos = repos;
+        this.profileservice = profileservice;
     }
 
     public List<UserDto> getUsers() {
@@ -57,7 +58,7 @@ public class UserService {
         return repos.existsById(id);
     }
 
-    public String createNormalUser(CreateUserProfileDto dto, MultipartFile file) {
+    public String createNormalUser(CreateUserProfileDto dto) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         dto.setApikey(randomString);
 
@@ -68,9 +69,9 @@ public class UserService {
         newUser.setEnabled(dto.enabled);
         newUser.setEmail(dto.email);
 
-        ProfileDto profile1 = profileservice.createNormalProfile(dto, file);
+        Profile profile1 = profileservice.createNormalProfile(dto);
 
-        newUser.setProfile(ProfileInputDto.toProfile(profile1));
+        newUser.setProfile(profile1);
 
         repos.save(newUser);
 
@@ -78,7 +79,7 @@ public class UserService {
         return newUser.getUsername();
     }
 
-    public String createCelebUser(CreateUserProfileDto dto, MultipartFile file) {
+    public String createCelebUser(CreateUserProfileDto dto) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         dto.setApikey(randomString);
 
@@ -89,9 +90,9 @@ public class UserService {
         newUser.setEnabled(dto.enabled);
         newUser.setEmail(dto.email);
 
-        ProfileDto profile1 = profileservice.createCelebrityProfile(dto, file);
+        Profile profile1 = profileservice.createCelebrityProfile(dto);
 
-        newUser.setProfile(ProfileInputDto.toProfile(profile1));
+        newUser.setProfile(profile1);
 
         repos.save(newUser);
 
@@ -99,7 +100,7 @@ public class UserService {
         return newUser.getUsername();
     }
 
-    public String createPageAdminUser(CreateUserProfileDto dto, MultipartFile file) {
+    public String createPageAdminUser(CreateUserProfileDto dto) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         dto.setApikey(randomString);
 
@@ -110,9 +111,9 @@ public class UserService {
         newUser.setEnabled(dto.enabled);
         newUser.setEmail(dto.email);
 
-        ProfileDto profile1 = profileservice.createPageAdminProfile(dto, file);
+        Profile profile1 = profileservice.createPageAdminProfile(dto);
 
-        newUser.setProfile(ProfileInputDto.toProfile(profile1));
+        newUser.setProfile(profile1);
 
         repos.save(newUser);
 
@@ -162,7 +163,7 @@ public class UserService {
 
         dto.username = user.getUsername();
         dto.password = user.getPassword();
-        dto.enabled = user.isEnabled();
+
         dto.apikey = user.getApikey();
         dto.email = user.getEmail();
         dto.authorities = user.getAuthorities();

@@ -3,8 +3,8 @@ package com.example.demo.dto;
 import com.example.demo.model.Friendrequest;
 import com.example.demo.model.Post;
 import com.example.demo.model.Profile;
-import jakarta.persistence.OneToOne;
-import jakarta.validation.constraints.NotBlank;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
 
 public class FriendrequestDto {
 

@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CreateUserProfileDto;
 import com.example.demo.dto.ProfileDto;
 import com.example.demo.dto.UserDto;
 import com.example.demo.service.ProfileService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,6 +19,16 @@ public class ProfileController {
 
     public ProfileController(ProfileService service) {
         this.service = service;
+    }
+
+
+    @PostMapping(value = "/{profileid}/addProfileImage")
+    public ResponseEntity<String> addProfileImage(@RequestParam("file")MultipartFile file, @PathVariable("profileid") long id) throws Exception{
+        String filename = service.addProfileimage(id,file);
+
+
+        return ResponseEntity.created(null).build();
+
     }
 
 

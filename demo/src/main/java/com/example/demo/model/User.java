@@ -1,11 +1,13 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@CrossOrigin
 @Table(name = "users")
 public class User {
 
@@ -63,13 +65,8 @@ private Profile profile;
         this.password = password;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+
 
     public String getApikey() {
         return apikey;

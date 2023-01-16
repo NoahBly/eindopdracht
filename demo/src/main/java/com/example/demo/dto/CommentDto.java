@@ -3,11 +3,11 @@ package com.example.demo.dto;
 import com.example.demo.model.Comment;
 import com.example.demo.model.Post;
 import com.example.demo.model.Profile;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.validation.constraints.NotBlank;
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
 
 public class CommentDto {
 

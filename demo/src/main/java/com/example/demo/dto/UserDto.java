@@ -92,7 +92,7 @@ public class UserDto {
         dto.email = user.getEmail();
         dto.password = user.getPassword();
         dto.username = user.getUsername();
-        dto.enabled = user.isEnabled();
+
 
         return dto;
     }

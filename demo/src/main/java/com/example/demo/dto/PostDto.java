@@ -3,7 +3,7 @@ package com.example.demo.dto;
 import com.example.demo.model.Comment;
 import com.example.demo.model.Post;
 import com.example.demo.model.Profile;
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 import java.util.List;
 

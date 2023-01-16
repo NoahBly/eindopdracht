@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.util.List;
 
@@ -41,10 +41,10 @@ public class Profile {
     @OneToMany(mappedBy = "profile")
     private List<Post> posts;
 
-    @OneToOne(mappedBy = "profile")
+   @OneToOne(mappedBy = "commentmaker")
     private Comment commentpost;
 
-    @OneToOne
+    @OneToOne(mappedBy = "profile")
     private User user;
 
     public List<Followrequest> getFollowrequests() {
@@ -135,12 +135,12 @@ public class Profile {
         this.posts = posts;
     }
 
-    public Comment getCommentpost() {
+   public Comment getCommentpost() {
         return commentpost;
     }
 
-    public void setCommentpost(Comment commentpost) {
-        this.commentpost = commentpost;
+   public void setCommentpost(Comment commentpost) {
+       this.commentpost = commentpost;
     }
 
     public User getUser() {
