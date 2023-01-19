@@ -54,6 +54,7 @@ public class UserService {
         return dto;
     }
 
+
     public boolean userExists(long id) {
         return repos.existsById(id);
     }
@@ -177,7 +178,7 @@ public class UserService {
 
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
-        user.setEnabled(userDto.getEnabled());
+
         user.setApikey(userDto.getApikey());
         user.setEmail(userDto.getEmail());
 

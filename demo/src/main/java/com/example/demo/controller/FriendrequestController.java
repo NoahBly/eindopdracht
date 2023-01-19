@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.FriendrequestDto;
-import com.example.demo.dto.IdinputDto;
-import com.example.demo.dto.PostDto;
-import com.example.demo.dto.ProfileDto;
+import com.example.demo.dto.*;
 import com.example.demo.model.Profile;
 import com.example.demo.service.FriendrequestService;
 import org.springframework.http.HttpStatus;
@@ -64,8 +61,8 @@ public class FriendrequestController {
     }
 
     @GetMapping(value = "/{profileid}/friends")
-    public ResponseEntity<List<ProfileDto>> getAllFriendsbyProfileID(@PathVariable("profileid") long profileid){
-        List<ProfileDto> FriendprofileDtos = service.getAllFriendsbyProfileID(profileid);
+    public ResponseEntity<List<ProfiletoProfileDto>> getAllFriendsbyProfileID(@PathVariable("profileid") long profileid){
+        List<ProfiletoProfileDto> FriendprofileDtos = service.getAllFriendsbyProfileID(profileid);
 
         return ResponseEntity.ok().body(FriendprofileDtos);
     }

@@ -26,13 +26,23 @@ public class PostController {
 
 
     @PostMapping(value = "/{profileid}")
-    public ResponseEntity<Object> createPost(@PathVariable("profileid") long profileid, @RequestParam("post") PostDto dto, @RequestParam("file") MultipartFile file) throws Exception{
+    public ResponseEntity<Object> createPost(@PathVariable("profileid") long profileid, @RequestParam("post") PostDto dto) throws Exception{
 
-        long postid = service.createPost(dto, profileid, file);
+        long postid = service.createPost(dto, profileid);
 
         return new ResponseEntity<>(postid, HttpStatus.CREATED);
 
     }
+
+    @PostMapping(value = "/{postid}/addPostImageVideo")
+    public ResponseEntity<String> addPostImageVideo(@RequestParam("file")MultipartFile file, @PathVariable("postid") long id) throws Exception{
+        String filename = service.addPostimagevideo(id,file);
+
+
+        return ResponseEntity.created(null).build();
+
+    }
+
 
 
 

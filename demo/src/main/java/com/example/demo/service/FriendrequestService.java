@@ -1,19 +1,19 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.FriendrequestDto;
-import com.example.demo.dto.FriendrequestInputDto;
-import com.example.demo.dto.ProfileDto;
-import com.example.demo.dto.ProfileInputDto;
+import com.example.demo.dto.*;
 import com.example.demo.exceptions.RecordNotFoundException;
 import com.example.demo.model.Friendrequest;
 import com.example.demo.model.Profile;
+import com.example.demo.model.ProfiletoProfile;
 import com.example.demo.repository.FriendrequestRepository;
 import com.example.demo.repository.ProfileRepository;
+import com.example.demo.repository.ProfiletoProfileRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +26,13 @@ public class FriendrequestService {
     private final ProfileRepository repos2;
     private final FriendrequestRepository repos;
 
-    public FriendrequestService(FriendrequestRepository repos, ProfileRepository repos2,UserRepository repos3) {
+    private final ProfiletoProfileRepository repos4;
+
+    public FriendrequestService(FriendrequestRepository repos, ProfileRepository repos2,UserRepository repos3, ProfiletoProfileRepository repos4) {
         this.repos = repos;
         this.repos2 = repos2;
         this.repos3 = repos3;
+        this.repos4 = repos4;
     }
 
     public long createFriendrequest(long profileidmaker, long profileidreceiver){
@@ -104,34 +107,38 @@ public class FriendrequestService {
         if (friendrequest1.isEmpty()) {
             throw new RecordNotFoundException("Cannot find id:" + id);
         } else {
-
             Friendrequest friendrequest2 = repos.findById(id).get();
             Profile receiver = friendrequest2.getReceiver();
             Profile maker = friendrequest2.getMaker();
-
-            List<Profile> friendlist2 = maker.getFriendlist();
-            List<Profile> friendlist = receiver.getFriendlist();
-            friendlist.add(maker);
-            friendlist2.add(receiver);
-            receiver.setFriendlist(friendlist);
-            repos2.save(receiver);
-
-            maker.setFriendlist(friendlist2);
+            ProfiletoProfile proftoprof = new ProfiletoProfile();
+            ProfiletoProfile proftoprof2 = new ProfiletoProfile();
+            proftoprof.setUser(maker);
+            proftoprof.setFriend(receiver);
+            proftoprof2.setUser(receiver);
+            proftoprof2.setFriend(maker);
+            repos4.save(proftoprof);
+            repos4.save(proftoprof2);
+            List<ProfiletoProfile>friendlist = maker.getFriendlist();
+            friendlist.add(proftoprof);
+            maker.setFriendlist(friendlist);
             repos2.save(maker);
-
+            List<ProfiletoProfile>friendlist2 = receiver.getFriendlist();
+            friendlist2.add(proftoprof2);
+            receiver.setFriendlist(friendlist2);
+            repos2.save(receiver);
         }
     }
 
-    public List<ProfileDto>getAllFriendsbyProfileID(long id) {
+    public List<ProfiletoProfileDto>getAllFriendsbyProfileID(long id) {
         Optional<Profile>profile1 = repos2.findById(id);
         if(profile1.isEmpty()) {
             throw new RecordNotFoundException("ID can not be found");
         }else {
             Profile profile2 = repos2.findById(id).get();
-            List<Profile> Friendlist = profile2.getFriendlist();
-            List<ProfileDto>Friendlist2 = new ArrayList<>();
-            for(Profile profile: Friendlist) {
-                Friendlist2.add(ProfileDto.fromProfile(profile));
+            List<ProfiletoProfile> Friendlist = profile2.getFriendlist();
+            List<ProfiletoProfileDto>Friendlist2 = new ArrayList<>();
+            for(ProfiletoProfile profile: Friendlist) {
+                Friendlist2.add(ProfiletoProfileDto.fromP2P(profile));
             }
 
             return Friendlist2;
@@ -139,10 +146,10 @@ public class FriendrequestService {
     }
 
     public void deleteFriendbyID(long id, long id2) {
-        List<ProfileDto> Friendlist = getAllFriendsbyProfileID(id);
-        List<Profile>Friendlist2 = new ArrayList<>();
-        for(ProfileDto profile: Friendlist) {
-            Friendlist2.add(ProfileInputDto.toProfile(profile));
+        List<ProfiletoProfileDto> Friendlist = getAllFriendsbyProfileID(id);
+        List<ProfiletoProfile>Friendlist2 = new ArrayList<>();
+        for(ProfiletoProfileDto profile: Friendlist) {
+            Friendlist2.add(ProfiletoProfileDto.toP2P(profile));
         }
 
         Optional<Profile> profile1 = repos2.findById(id2);

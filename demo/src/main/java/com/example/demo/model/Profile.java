@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 
 import java.util.List;
@@ -9,7 +11,9 @@ import java.util.List;
 public class Profile {
 
     @Id
+
     @GeneratedValue
+    @Column(name = "id")
     private long id;
 
 
@@ -21,20 +25,21 @@ public class Profile {
 
     private String profileimage;
 
-    @OneToMany
-    private List<Profile> friendlist;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
+    private List<ProfiletoProfile> friendlist;
+
+    @OneToMany(mappedBy = "receiver")
     private List<Followrequest> followrequests;
 
-    @OneToMany
+    @OneToMany(mappedBy = "receiver")
     private List<Friendrequest> friendrequests;
 
-    @OneToMany
-    private List<Profile> followerslist;
+    @OneToMany(mappedBy = "user")
+    private List<ProfiletoProfile> followerslist;
 
-    @OneToMany
-    private List<Profile> followinglist;
+    @OneToMany(mappedBy = "user")
+    private List<ProfiletoProfile> followinglist;
 
     private String bioinformation;
 
@@ -95,27 +100,27 @@ public class Profile {
         this.profileimage = profileimage;
     }
 
-    public List<Profile> getFriendlist() {
+    public List<ProfiletoProfile> getFriendlist() {
         return friendlist;
     }
 
-    public void setFriendlist(List<Profile> friendlist) {
+    public void setFriendlist(List<ProfiletoProfile> friendlist) {
         this.friendlist = friendlist;
     }
 
-    public List<Profile> getFollowerslist() {
+    public List<ProfiletoProfile> getFollowerslist() {
         return followerslist;
     }
 
-    public void setFollowerslist(List<Profile> followerslist) {
+    public void setFollowerslist(List<ProfiletoProfile> followerslist) {
         this.followerslist = followerslist;
     }
 
-    public List<Profile> getFollowinglist() {
+    public List<ProfiletoProfile> getFollowinglist() {
         return followinglist;
     }
 
-    public void setFollowinglist(List<Profile> followinglist) {
+    public void setFollowinglist(List<ProfiletoProfile> followinglist) {
         this.followinglist = followinglist;
     }
 

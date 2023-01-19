@@ -1,16 +1,15 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.FollowrequestDto;
-import com.example.demo.dto.FriendrequestDto;
-import com.example.demo.dto.ProfileDto;
-import com.example.demo.dto.ProfileInputDto;
+import com.example.demo.dto.*;
 import com.example.demo.exceptions.RecordNotFoundException;
 import com.example.demo.model.Followrequest;
 import com.example.demo.model.Friendrequest;
 import com.example.demo.model.Profile;
+import com.example.demo.model.ProfiletoProfile;
 import com.example.demo.repository.FollowrequestRepository;
 
 import com.example.demo.repository.ProfileRepository;
+import com.example.demo.repository.ProfiletoProfileRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,9 +22,12 @@ public class FollowrequestService {
     private final ProfileRepository repos2;
     private final FollowrequestRepository repos;
 
-    public FollowrequestService(ProfileRepository repos2, FollowrequestRepository repos) {
+    private final ProfiletoProfileRepository repos3;
+
+    public FollowrequestService(ProfileRepository repos2, FollowrequestRepository repos, ProfiletoProfileRepository repos3) {
         this.repos2 = repos2;
         this.repos = repos;
+        this.repos3 = repos3;
     }
 
     public long createFollowrequest(long profileidmaker, long profileidreceiver){
@@ -109,10 +111,20 @@ public class FollowrequestService {
             Profile receiver = followrequest2.getReceiver();
             Profile maker = followrequest2.getMaker();
 
-            List<Profile> followinglist2 = maker.getFollowinglist();
-            List<Profile> followerslist = receiver.getFollowerslist();
-            followerslist.add(maker);
-            followinglist2.add(receiver);
+            ProfiletoProfile proftoprof = new ProfiletoProfile();
+            ProfiletoProfile proftoprof2 = new ProfiletoProfile();
+
+            proftoprof.setUser(maker);
+            proftoprof.setFriend(receiver);
+            proftoprof2.setUser(receiver);
+            proftoprof2.setFriend(maker);
+            repos3.save(proftoprof);
+            repos3.save(proftoprof2);
+
+            List<ProfiletoProfile> followinglist2 = maker.getFollowinglist();
+            List<ProfiletoProfile> followerslist = receiver.getFollowerslist();
+            followerslist.add(proftoprof2);
+            followinglist2.add(proftoprof);
             receiver.setFollowerslist(followerslist);
             repos2.save(receiver);
 
@@ -124,16 +136,16 @@ public class FollowrequestService {
 
 
 
-    public List<ProfileDto>getAllFollowersbyProfileID(long id) {
+    public List<ProfiletoProfileDto>getAllFollowersbyProfileID(long id) {
         Optional<Profile> profile1 = repos2.findById(id);
         if(profile1.isEmpty()) {
             throw new RecordNotFoundException("ID can not be found");
         }else {
             Profile profile2 = repos2.findById(id).get();
-            List<Profile> Followerslist = profile2.getFollowerslist();
-            List<ProfileDto> Followerslist2 = new ArrayList<>();
-            for(Profile profile: Followerslist) {
-                Followerslist2.add(ProfileDto.fromProfile(profile));
+            List<ProfiletoProfile> Followerslist = profile2.getFollowerslist();
+            List<ProfiletoProfileDto> Followerslist2 = new ArrayList<>();
+            for(ProfiletoProfile profile: Followerslist) {
+                Followerslist2.add(ProfiletoProfileDto.fromP2P(profile));
             }
             return Followerslist2;
         }
@@ -142,10 +154,10 @@ public class FollowrequestService {
 
 
     public void deleteFollowerbyID(long id, long id2) {
-        List<ProfileDto> Followerslist = getAllFollowersbyProfileID(id);
-        List<Profile> Followerslist2 = new ArrayList<>();
-        for(ProfileDto profile: Followerslist) {
-            Followerslist2.add(ProfileInputDto.toProfile(profile));
+        List<ProfiletoProfileDto> Followerslist = getAllFollowersbyProfileID(id);
+        List<ProfiletoProfile> Followerslist2 = new ArrayList<>();
+        for(ProfiletoProfileDto profile: Followerslist) {
+            Followerslist2.add(ProfiletoProfileDto.toP2P(profile));
         }
 
         Optional<Profile> profile1 = repos2.findById(id2);
@@ -162,16 +174,16 @@ public class FollowrequestService {
 
 
 
-    public List<ProfileDto>getAllFollowingsbyProfileID(long id) {
+    public List<ProfiletoProfileDto>getAllFollowingsbyProfileID(long id) {
         Optional<Profile>profile1 = repos2.findById(id);
         if(profile1.isEmpty()) {
             throw new RecordNotFoundException("ID can not be found");
         }else {
             Profile profile2 = repos2.findById(id).get();
-            List<Profile> Followinglist = profile2.getFollowinglist();
-            List<ProfileDto> Followinglist2 = new ArrayList<>();
-            for(Profile profile: Followinglist) {
-                Followinglist2.add(ProfileDto.fromProfile(profile));
+            List<ProfiletoProfile> Followinglist = profile2.getFollowinglist();
+            List<ProfiletoProfileDto> Followinglist2 = new ArrayList<>();
+            for(ProfiletoProfile profile: Followinglist) {
+                Followinglist2.add(ProfiletoProfileDto.fromP2P(profile));
             }
             return Followinglist2;
         }
@@ -180,10 +192,10 @@ public class FollowrequestService {
 
 
     public void deleteFollowingbyID(long id, long id2) {
-        List<ProfileDto> Followinglist = getAllFollowingsbyProfileID(id);
-        List<Profile> Followinglist2 = new ArrayList<>();
-        for(ProfileDto profile: Followinglist) {
-            Followinglist2.add(ProfileInputDto.toProfile(profile));
+        List<ProfiletoProfileDto> Followinglist = getAllFollowingsbyProfileID(id);
+        List<ProfiletoProfile> Followinglist2 = new ArrayList<>();
+        for(ProfiletoProfileDto profile: Followinglist) {
+            Followinglist2.add(ProfiletoProfileDto.toP2P(profile));
         }
 
         Optional<Profile> profile1 = repos2.findById(id2);

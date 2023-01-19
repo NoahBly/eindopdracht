@@ -11,10 +11,10 @@ public class Followrequest {
     @GeneratedValue
     private long id;
 
-    @OneToOne
+    @ManyToOne
     private Profile maker;
 
-    @OneToOne
+    @ManyToOne
     private Profile receiver;
 
     public Followrequest() {

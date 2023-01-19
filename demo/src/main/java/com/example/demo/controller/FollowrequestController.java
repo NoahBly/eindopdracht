@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.dto.FollowrequestDto;
-import com.example.demo.dto.FriendrequestDto;
-import com.example.demo.dto.IdinputDto;
-import com.example.demo.dto.ProfileDto;
+import com.example.demo.dto.*;
 import com.example.demo.service.FollowrequestService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,8 +61,8 @@ public class FollowrequestController {
     }
 
     @GetMapping(value = "/{profileid}/followers")
-    public ResponseEntity<List<ProfileDto>> getAllFollowersbyProfileID(@PathVariable("profileid") long profileid){
-        List<ProfileDto> FollowprofileDtos = service.getAllFollowersbyProfileID(profileid);
+    public ResponseEntity<List<ProfiletoProfileDto>> getAllFollowersbyProfileID(@PathVariable("profileid") long profileid){
+        List<ProfiletoProfileDto> FollowprofileDtos = service.getAllFollowersbyProfileID(profileid);
 
         return ResponseEntity.ok().body(FollowprofileDtos);
     }
@@ -77,6 +74,12 @@ public class FollowrequestController {
         return  ResponseEntity.noContent().build();
     }
 
+
+    @DeleteMapping ("/{profileid}/following/{profilefollowingid}")
+    public ResponseEntity<Object> deleteFollowingByID(@PathVariable("profileid") long profileid,@PathVariable("profilefollowingid") long profilefollowingid) {
+        service.deleteFollowingbyID(profileid,profilefollowingid);
+        return  ResponseEntity.noContent().build();
+    }
 
 
 }

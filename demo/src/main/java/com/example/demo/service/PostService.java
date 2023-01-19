@@ -33,29 +33,12 @@ public class PostService {
 
     private final Path root = Paths.get("uploads");
 
-    public long createPost(PostDto postdto, long profileid, MultipartFile file) {
-       // we moeten dit hier doen om de file te kunnen opslaan in de post.
-        String filename = "";
-        long fileID = 0;
-        try {
-            Files.createDirectories(root);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not initialize folder for upload!");
-        }
-        try{
-        fileID = Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
-        filename = file.getOriginalFilename();
+    public long createPost(PostDto postdto, long profileid) {
 
-        } catch (Exception e) {
-            if (e instanceof FileAlreadyExistsException) {
-                throw new RuntimeException("A file of that name already exists.");
-            }
-        }
 
         Post post1 = new Post();
         Profile profile1 = repos2.findById(profileid).get();
         post1.setName(postdto.name);
-        post1.setImagevideo(filename);
         Post post2 = repos.save(post1);
         List<Post> profileposts = new ArrayList<>(profile1.getPosts());
         profileposts.add(post2);
@@ -63,6 +46,38 @@ public class PostService {
         repos2.save(profile1);
         return post2.getId();
 
+    }
+
+    public String addPostimagevideo (long postid,MultipartFile file) {
+
+        String filename = "";
+        long fileID = 0;
+        Profile newProfile = null;
+        Optional<Post> post = repos.findById(postid);
+
+        if (post.isEmpty()) {
+            throw new RecordNotFoundException("ID can not be found");
+        } else {
+            Post newPost = repos.findById(postid).get();
+
+            try {
+                Files.createDirectories(root);
+            } catch (IOException e) {
+                throw new RuntimeException("Could not initialize folder for upload!");
+            }
+            try {
+                fileID = Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+                filename = file.getOriginalFilename();
+
+            } catch (Exception e) {
+                if (e instanceof FileAlreadyExistsException) {
+                    throw new RuntimeException("A file of that name already exists.");
+                }
+            }
+            newPost.setImagevideo(filename);
+            repos.save(newPost);
+            return filename;
+        }
     }
 
     public PostDto getPostbyID(long postid) {

@@ -10,10 +10,10 @@ public class Friendrequest {
     @GeneratedValue
     private long id;
 
-    @OneToOne
+    @ManyToOne
     private Profile maker;
 
-    @OneToOne
+    @ManyToOne
     private Profile receiver;
 
     public Friendrequest() {

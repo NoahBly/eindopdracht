@@ -82,6 +82,7 @@ public class UserController {
         return ResponseEntity.ok().body(optionalUser);
     }
 
+
     @PutMapping(value = "/{username}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("username") String username, @RequestBody UserDto userdto) throws Exception {
        userService.updateUser(username, userdto);

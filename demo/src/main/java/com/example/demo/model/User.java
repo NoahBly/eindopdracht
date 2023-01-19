@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.Type;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.HashSet;
@@ -11,18 +13,17 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
 
-    @Id
-@GeneratedValue(strategy = GenerationType.SEQUENCE)
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   @Column(name = "id")
     private long id;
 
     @Column(nullable = false, unique = true)
-private String username;
+    private String username;
 
-@Column(nullable = false, length = 255)
+    @Column(nullable = false, length = 255)
     private String password;
 
-@Column(nullable = false)
-private boolean enabled;
 
 @Column
 private String apikey;
@@ -39,6 +40,7 @@ private String apikey;
 private Set<Authority> authorities = new HashSet<>();
 
 @OneToOne
+@JoinColumn(name = "profile_id", referencedColumnName = "id")
 private Profile profile;
 
     public long getId() {
