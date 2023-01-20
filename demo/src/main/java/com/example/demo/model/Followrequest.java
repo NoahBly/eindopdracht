@@ -12,6 +12,7 @@ public class Followrequest {
     private long id;
 
     @ManyToOne
+    @JoinColumn(name = "maker_id")
     private Profile maker;
 
     @ManyToOne

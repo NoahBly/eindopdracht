@@ -29,10 +29,10 @@ public class Profile {
     @OneToMany(mappedBy = "user")
     private List<ProfiletoProfile> friendlist;
 
-    @OneToMany(mappedBy = "receiver")
+    @OneToMany(mappedBy = "maker")
     private List<Followrequest> followrequests;
 
-    @OneToMany(mappedBy = "receiver")
+    @OneToMany(mappedBy = "maker")
     private List<Friendrequest> friendrequests;
 
     @OneToMany(mappedBy = "user")
@@ -49,7 +49,8 @@ public class Profile {
    @OneToOne(mappedBy = "commentmaker")
     private Comment commentpost;
 
-    @OneToOne(mappedBy = "profile")
+    @OneToOne
+    //@JoinColumn(name = "profile_id", insertable=false, updatable=false)
     private User user;
 
     public List<Followrequest> getFollowrequests() {

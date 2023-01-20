@@ -73,6 +73,7 @@ public class UserService {
         Profile profile1 = profileservice.createNormalProfile(dto);
 
         newUser.setProfile(profile1);
+        newUser.setProfileId(profile1.getId());
 
         repos.save(newUser);
 
@@ -161,13 +162,15 @@ public class UserService {
     public static UserDto fromUser(User user){
 
         var dto = new UserDto();
-
+        dto.id = user.getId();
         dto.username = user.getUsername();
         dto.password = user.getPassword();
 
         dto.apikey = user.getApikey();
         dto.email = user.getEmail();
         dto.authorities = user.getAuthorities();
+        dto.profile = user.getProfile();
+        dto.profile_id = user.getProfileId();
 
         return dto;
     }
@@ -175,12 +178,13 @@ public class UserService {
     public User toUser(UserDto userDto) {
 
         var user = new User();
-
+        user.setId(userDto.id);
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
 
         user.setApikey(userDto.getApikey());
         user.setEmail(userDto.getEmail());
+        user.setProfileId(user.getProfileId());
 
         return user;
     }

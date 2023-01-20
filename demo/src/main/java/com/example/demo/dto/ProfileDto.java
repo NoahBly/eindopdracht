@@ -37,7 +37,7 @@ public class ProfileDto {
    public User user;
     public static ProfileDto fromProfile(Profile profile) {
         ProfileDto profile1 = new ProfileDto();
-
+        profile1.id = profile.getId();
         profile1.type = profile.getType();
         profile1.name = profile.getName();
         profile1.profileimage = profile.getProfileimage();

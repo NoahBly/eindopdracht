@@ -31,17 +31,20 @@ private String apikey;
 @Column
     private String email;
 
+@Column
+private long profile_id;
+
 @OneToMany(
         targetEntity = Authority.class,
-        mappedBy = "username",
+      //  mappedBy = "username",
         cascade = CascadeType.ALL,
         orphanRemoval = true,
     fetch = FetchType.EAGER)
 private Set<Authority> authorities = new HashSet<>();
 
-@OneToOne
-@JoinColumn(name = "profile_id", referencedColumnName = "id")
-private Profile profile;
+    @OneToOne
+    @JoinColumn(name = "profile_id", referencedColumnName="id", insertable=false, updatable=false)
+    private Profile profile;
 
     public long getId() {
         return id;
@@ -105,5 +108,13 @@ private Profile profile;
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    public long getProfileId() {
+        return profile_id;
+    }
+
+    public void setProfileId(long profile_id) {
+        this.profile_id = profile_id;
     }
 }

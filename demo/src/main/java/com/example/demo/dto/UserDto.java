@@ -15,6 +15,8 @@ public class UserDto {
     public Boolean enabled;
     public String apikey;
     public String email;
+
+    public long profile_id;
     @JsonSerialize
     public Set<Authority> authorities;
 
@@ -84,6 +86,14 @@ public class UserDto {
         this.profile = profile;
     }
 
+    public long getProfileId() {
+        return profile_id;
+    }
+
+    public void setProfileId(long profile_id) {
+        this.profile_id = profile_id;
+    }
+
     public static UserDto fromUser(User user) {
         UserDto dto = new UserDto();
         dto.id = user.getId();
@@ -92,7 +102,8 @@ public class UserDto {
         dto.email = user.getEmail();
         dto.password = user.getPassword();
         dto.username = user.getUsername();
-
+        dto.profile_id = user.getProfileId();
+        dto.profile = user.getProfile();
 
         return dto;
     }

@@ -20,6 +20,7 @@ public class ProfiletoProfileDto {
     public static ProfiletoProfileDto fromP2P(ProfiletoProfile P2P) {
         ProfiletoProfileDto P2P1 = new ProfiletoProfileDto();
 
+        P2P1.id = P2P.getId();
         P2P1.user = P2P.getUser();
         P2P1.friend = P2P.getFriend();
 
@@ -28,7 +29,7 @@ public class ProfiletoProfileDto {
 
     public static ProfiletoProfile toP2P(ProfiletoProfileDto P2P) {
         ProfiletoProfile P2P1 = new ProfiletoProfile();
-
+        P2P1.setId(P2P.id);
         P2P1.setUser(P2P.user);
         P2P1.setFriend(P2P.friend);
 

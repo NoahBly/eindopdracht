@@ -38,7 +38,7 @@ public class ProfileInputDto {
 
     public static Profile toProfile(ProfileDto profile) {
         Profile profile1 = new Profile();
-
+        profile1.setId(profile.id);
         profile1.setType(profile.type);
         profile1.setName(profile.name);
         profile1.setProfileimage(profile.profileimage);

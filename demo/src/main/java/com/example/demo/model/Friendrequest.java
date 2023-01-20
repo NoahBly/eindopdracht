@@ -11,6 +11,7 @@ public class Friendrequest {
     private long id;
 
     @ManyToOne
+    @JoinColumn(name = "profile_id")
     private Profile maker;
 
     @ManyToOne

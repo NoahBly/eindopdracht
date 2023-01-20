@@ -10,6 +10,7 @@ public class ProfiletoProfile {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "profile_id")
     private Profile user;
 
     @ManyToOne
