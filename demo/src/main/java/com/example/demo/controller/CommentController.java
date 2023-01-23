@@ -22,8 +22,8 @@ public class CommentController {
         this.service = service;
     }
 
-    @PostMapping(value = "")
-    public ResponseEntity<Object> createComment(@RequestBody long postid, @RequestBody Long profileidmaker, @RequestBody CommentDto dto) throws Exception{
+    @PostMapping(value = "/post/{postid}/profile/{profileidmaker}")
+    public ResponseEntity<Object> createComment(@PathVariable ("postid") long postid, @PathVariable("profileidmaker") Long profileidmaker, @RequestBody CommentDto dto) throws Exception{
 
         long commentid = service.createComment(dto,postid,profileidmaker);
 
@@ -42,7 +42,7 @@ public class CommentController {
 
 
 
-    @GetMapping(value = "/{postid}")
+    @GetMapping(value = "/post/{postid}")
     public ResponseEntity<List<CommentDto>> getAllCommentsbyPostID(@PathVariable("postid") long postid){
         List<CommentDto> commentDtos = service.findallCommentsbyPost(postid);
 

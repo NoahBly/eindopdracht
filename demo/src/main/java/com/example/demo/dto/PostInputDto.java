@@ -23,7 +23,7 @@ public class PostInputDto {
 
     public static Post toPost(PostDto post1) {
         Post post2 = new Post();
-
+        post2.setId(post1.id);
         post2.setName(post1.name);
         post2.setImagevideo(post1.imagevideo);
         post2.setComments(post1.comments);

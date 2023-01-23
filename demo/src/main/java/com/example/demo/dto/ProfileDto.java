@@ -41,6 +41,7 @@ public class ProfileDto {
         profile1.type = profile.getType();
         profile1.name = profile.getName();
         profile1.profileimage = profile.getProfileimage();
+        profile1.friendlist = profile.getFriendlist();
         profile1.followinglist = profile.getFollowinglist();
         profile1.followerslist = profile.getFollowerslist();
         profile1.bioinformation = profile.getBioinformation();

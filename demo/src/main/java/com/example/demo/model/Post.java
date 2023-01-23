@@ -14,14 +14,14 @@ public class Post {
 
     private String name;
 
-    @Column(nullable = false, unique = false)
+    @Column(unique = false)
     private String imagevideo;
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 
     @ManyToOne
-    @JoinColumn(name = "profile_id")
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile profile;
 
     public Post() {

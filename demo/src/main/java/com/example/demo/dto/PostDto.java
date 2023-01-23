@@ -14,7 +14,7 @@ public class PostDto {
 
     public String name;
 
-    @NotBlank
+
     public String imagevideo;
 
     public List<Comment> comments;
@@ -23,7 +23,7 @@ public class PostDto {
 
     public static PostDto fromPost(Post post1) {
         PostDto post2 = new PostDto();
-
+        post2.id = post1.getId();
         post2.name = post1.getName();
         post2.imagevideo = post1.getImagevideo();
         post2.comments = post1.getComments();

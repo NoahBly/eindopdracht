@@ -11,10 +11,11 @@ public class Friendrequest {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "profile_id")
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile maker;
 
     @ManyToOne
+    @JoinColumn(name= "receiver_id", referencedColumnName = "id")
     private Profile receiver;
 
     public Friendrequest() {

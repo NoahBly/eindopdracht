@@ -42,6 +42,7 @@ public class ProfileInputDto {
         profile1.setType(profile.type);
         profile1.setName(profile.name);
         profile1.setProfileimage(profile.profileimage);
+        profile1.setFriendlist(profile.friendlist);
         profile1.setFollowinglist(profile.followinglist);
         profile1.setFollowerslist(profile.followerslist);
         profile1.setBioinformation(profile.bioinformation);

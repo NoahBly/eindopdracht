@@ -21,7 +21,7 @@ public class FollowrequestDto {
 
     public static FollowrequestDto fromFollowrequest(Followrequest followrequest1) {
        FollowrequestDto followrequest2 = new FollowrequestDto();
-
+        followrequest2.id = followrequest1.getId();
         followrequest2.maker = followrequest1.getMaker();
         followrequest2.receiver = followrequest1.getReceiver();
 

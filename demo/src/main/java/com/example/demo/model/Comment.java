@@ -14,11 +14,11 @@ public class Comment {
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post;
 
     @OneToOne
-    @JoinColumn(name = "commentmaker_id")
+    @JoinColumn(name = "commentmaker_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Profile commentmaker;
 
 

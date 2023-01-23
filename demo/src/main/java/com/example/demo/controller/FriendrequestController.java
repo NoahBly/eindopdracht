@@ -40,7 +40,7 @@ public class FriendrequestController {
 
 
 
-    @GetMapping(value = "/{profileid}")
+    @GetMapping(value = "/profile/{profileid}")
     public ResponseEntity<List<FriendrequestDto>> getAllFriendrequestsbyProfileID(@PathVariable("profileid") long profileid){
         List<FriendrequestDto> friendrequestDtos = service.findAllFriendrequestsbyProfile(profileid);
 
@@ -60,7 +60,7 @@ public class FriendrequestController {
         return  ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "/{profileid}/friends")
+    @GetMapping(value = "/profile/{profileid}/friends")
     public ResponseEntity<List<ProfiletoProfileDto>> getAllFriendsbyProfileID(@PathVariable("profileid") long profileid){
         List<ProfiletoProfileDto> FriendprofileDtos = service.getAllFriendsbyProfileID(profileid);
 
@@ -69,7 +69,7 @@ public class FriendrequestController {
 
 
 
-    @DeleteMapping ("/{profileid}/friends/{profilefriendid}")
+    @DeleteMapping ("/profile/{profileid}/friends/{profilefriendid}")
     public ResponseEntity<Object> deleteFriendByID(@PathVariable("profileid") long profileid,@PathVariable("profilefriendid") long profilefriendid) {
         service.deleteFriendbyID(profileid,profilefriendid);
         return  ResponseEntity.noContent().build();

@@ -40,7 +40,7 @@ public class ProfileController {
     }
 
 
-    @GetMapping(value = "/{userid}")
+    @GetMapping(value = "/user/{userid}")
     public ResponseEntity<ProfileDto> getProfilebyUserID(@PathVariable("userid") long id) throws Exception {
         ProfileDto optionalProfile = service.getProfilebyUserID(id);
 
@@ -55,7 +55,7 @@ public class ProfileController {
         return ResponseEntity.ok().body(profileDtos);
     }
 
-    @GetMapping(value = "/{profilename}")
+    @GetMapping(value = "/profile/{profilename}")
     public ResponseEntity<List<ProfileDto>> getAllProfilesbyName(@PathVariable("profilename") String profilename) throws Exception{
         List<ProfileDto> profileDtos = service.findAllProfilesbyname(profilename);
 

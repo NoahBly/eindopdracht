@@ -21,7 +21,7 @@ public class FriendrequestDto {
 
     public static FriendrequestDto fromFriendrequest(Friendrequest friendrequest1) {
         FriendrequestDto friendrequest2 = new FriendrequestDto();
-
+        friendrequest2.id = friendrequest1.getId();
         friendrequest2.maker = friendrequest1.getMaker();
         friendrequest2.receiver = friendrequest1.getReceiver();
 

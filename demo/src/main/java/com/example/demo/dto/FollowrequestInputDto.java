@@ -21,7 +21,7 @@ public class FollowrequestInputDto {
 
     public static Followrequest toFollowrequest(FollowrequestDto followrequest1) {
         Followrequest followrequest2 = new Followrequest();
-
+        followrequest2.setId(followrequest1.id);
         followrequest2.setMaker(followrequest1.maker);
         followrequest2.setReceiver(followrequest1.receiver);
 

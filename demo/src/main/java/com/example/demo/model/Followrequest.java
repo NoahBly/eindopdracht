@@ -12,10 +12,11 @@ public class Followrequest {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "maker_id")
+    @JoinColumn(name = "maker_id", referencedColumnName = "id")
     private Profile maker;
 
     @ManyToOne
+    @JoinColumn(name = "receiver_id", referencedColumnName = "id")
     private Profile receiver;
 
     public Followrequest() {

@@ -20,7 +20,7 @@ public class FriendrequestInputDto {
 
     public static Friendrequest toFriendrequest(FriendrequestDto friendrequest1) {
         Friendrequest friendrequest2 = new Friendrequest();
-
+        friendrequest2.setId(friendrequest1.id);
         friendrequest2.setMaker(friendrequest1.maker);
         friendrequest2.setReceiver(friendrequest1.receiver);
 

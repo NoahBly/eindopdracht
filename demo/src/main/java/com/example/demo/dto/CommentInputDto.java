@@ -22,7 +22,7 @@ public class CommentInputDto {
 
     public static Comment toComment(CommentDto comment1) {
         Comment comment2 = new Comment();
-
+        comment2.setId(comment1.id);
         comment2.setPost(comment1.post);
         comment2.setComment(comment1.comment);
         comment2.setCommentmaker(comment1.commentmaker);

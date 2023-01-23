@@ -26,7 +26,7 @@ public class PostController {
 
 
     @PostMapping(value = "/{profileid}")
-    public ResponseEntity<Object> createPost(@PathVariable("profileid") long profileid, @RequestParam("post") PostDto dto) throws Exception{
+    public ResponseEntity<Object> createPost(@PathVariable("profileid") long profileid, @RequestBody PostDto dto) throws Exception{
 
         long postid = service.createPost(dto, profileid);
 
@@ -46,7 +46,7 @@ public class PostController {
 
 
 
-    @GetMapping(value = "/{postid}")
+    @GetMapping(value = "/post/{postid}")
     public ResponseEntity<PostDto> getPostbyID(@PathVariable("postid") long id) throws Exception {
         PostDto optionalPost = service.getPostbyID(id);
 
@@ -55,20 +55,20 @@ public class PostController {
 
 
     @GetMapping(value = "/{profileid}")
-    public ResponseEntity<List<PostDto>> getAllPostsbyProfileID(@PathVariable("profileid") long profileid){
-        List<PostDto> postDtos = service.findallPostsbyProfile(profileid);
+    public ResponseEntity<List<PostDto>> getAllPostsbyProfileID(@PathVariable("profileid") long id){
+        List<PostDto> postDtos = service.findallPostsbyProfile(id);
 
         return ResponseEntity.ok().body(postDtos);
     }
 
 
-    @DeleteMapping(value = "/{postid}")
+    @DeleteMapping(value = "/post/{postid}")
     public ResponseEntity<Object> deletePost(@PathVariable("postid") long id) {
         service.deletePost(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value = "/{postid}")
+    @PutMapping(value = "/post/{postid}")
     public ResponseEntity<UserDto> updatePost(@PathVariable("postid") long id, @RequestBody PostDto postdto) throws Exception {
         service.updatePost(id, postdto);
 

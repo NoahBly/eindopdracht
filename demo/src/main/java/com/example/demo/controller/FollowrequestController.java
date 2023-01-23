@@ -40,7 +40,7 @@ public class FollowrequestController {
 
 
 
-    @GetMapping(value = "/{profileid}")
+    @GetMapping(value = "/profile/{profileid}")
     public ResponseEntity<List<FollowrequestDto>> getAllFollowrequestsbyProfileID(@PathVariable("profileid") long profileid){
         List<FollowrequestDto> followrequestDtos = service.findAllFollowrequestsbyProfile(profileid);
 
@@ -60,7 +60,7 @@ public class FollowrequestController {
         return  ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "/{profileid}/followers")
+    @GetMapping(value = "/profile/{profileid}/followers")
     public ResponseEntity<List<ProfiletoProfileDto>> getAllFollowersbyProfileID(@PathVariable("profileid") long profileid){
         List<ProfiletoProfileDto> FollowprofileDtos = service.getAllFollowersbyProfileID(profileid);
 
@@ -68,14 +68,14 @@ public class FollowrequestController {
     }
 
 
-    @DeleteMapping ("/{profileid}/followers/{profilefollowerid}")
+    @DeleteMapping ("/profile/{profileid}/followers/{profilefollowerid}")
     public ResponseEntity<Object> deleteFollowerByID(@PathVariable("profileid") long profileid,@PathVariable("profilefollowerid") long profilefollowerid) {
         service.deleteFollowerbyID(profileid,profilefollowerid);
         return  ResponseEntity.noContent().build();
     }
 
 
-    @DeleteMapping ("/{profileid}/following/{profilefollowingid}")
+    @DeleteMapping ("/profile/{profileid}/following/{profilefollowingid}")
     public ResponseEntity<Object> deleteFollowingByID(@PathVariable("profileid") long profileid,@PathVariable("profilefollowingid") long profilefollowingid) {
         service.deleteFollowingbyID(profileid,profilefollowingid);
         return  ResponseEntity.noContent().build();
