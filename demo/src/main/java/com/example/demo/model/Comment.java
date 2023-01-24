@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,7 +20,8 @@ public class Comment {
     private Post post;
 
     @OneToOne
-    @JoinColumn(name = "commentmaker_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "commentmaker_id", referencedColumnName = "id")
+    @JsonIgnore
     private Profile commentmaker;
 
 

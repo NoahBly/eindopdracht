@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -44,12 +45,15 @@ public class Profile {
     private String bioinformation;
 
     @OneToMany(mappedBy = "profile")
+    @JsonIgnore
     private List<Post> posts;
 
    @OneToOne(mappedBy = "commentmaker")
+   @JsonIgnore
     private Comment commentpost;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     //@JoinColumn(name = "profile_id", insertable=false, updatable=false)
     private User user;
 

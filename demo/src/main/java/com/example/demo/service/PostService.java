@@ -39,6 +39,7 @@ public class PostService {
         Post post1 = new Post();
         Profile profile1 = repos2.findById(profileid).get();
         post1.setName(postdto.name);
+        post1.setProfile(profile1);
         Post post2 = repos.save(post1);
         List<Post> profileposts = new ArrayList<>(profile1.getPosts());
         profileposts.add(post2);

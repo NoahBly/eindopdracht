@@ -42,7 +42,7 @@ private long profile_id;
     fetch = FetchType.EAGER)
 private Set<Authority> authorities = new HashSet<>();
 
-    @OneToOne
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id", referencedColumnName="id", insertable=false, updatable=false)
     private Profile profile;
 

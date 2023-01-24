@@ -38,6 +38,7 @@ public class CommentService {
 
         comment1.setComment(commentdto.comment);
         comment1.setCommentmaker(commentmaker);
+        comment1.setPost(post1);
         repos.save(comment1);
 
         List<Comment> comments = new ArrayList<>(post1.getComments());

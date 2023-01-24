@@ -9,6 +9,7 @@ import com.example.demo.exceptions.RecordNotFoundException;
 import com.example.demo.model.Authority;
 import com.example.demo.model.Profile;
 import com.example.demo.model.User;
+import com.example.demo.repository.ProfileRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,15 +24,16 @@ public class UserService {
 
     /*autowire de juiste repository*/
     UserRepository repos;
-
+    ProfileRepository repos2;
     ProfileService profileservice;
 
 
 
 
-    public UserService(UserRepository repos,ProfileService profileservice) {
+    public UserService(UserRepository repos,ProfileService profileservice,ProfileRepository repos2) {
         this.repos = repos;
         this.profileservice = profileservice;
+        this.repos2 = repos2;
     }
 
     public List<UserDto> getUsers() {
@@ -75,7 +77,9 @@ public class UserService {
         newUser.setProfile(profile1);
         newUser.setProfileId(profile1.getId());
 
-        repos.save(newUser);
+        User newuser2 = repos.save(newUser);
+        profile1.setUser(newuser2);
+        repos2.save(profile1);
 
 
         return newUser.getUsername();
@@ -95,9 +99,10 @@ public class UserService {
         Profile profile1 = profileservice.createCelebrityProfile(dto);
 
         newUser.setProfile(profile1);
-
-        repos.save(newUser);
-
+        newUser.setProfileId(profile1.getId());
+        User newuser2 = repos.save(newUser);
+        profile1.setUser(newuser2);
+       repos2.save(profile1);
 
         return newUser.getUsername();
     }
@@ -115,10 +120,13 @@ public class UserService {
 
         Profile profile1 = profileservice.createPageAdminProfile(dto);
 
+
         newUser.setProfile(profile1);
+        newUser.setProfileId(profile1.getId());
 
-        repos.save(newUser);
-
+       User newuser2 = repos.save(newUser);
+       profile1.setUser(newuser2);
+       repos2.save(profile1);
 
         return newUser.getUsername();
     }
