@@ -27,7 +27,7 @@ public class CommentController {
 
         long commentid = service.createComment(dto,postid,profileidmaker);
 
-        return new ResponseEntity<>(postid, HttpStatus.CREATED);
+        return new ResponseEntity<>(commentid, HttpStatus.CREATED);
 
     }
 

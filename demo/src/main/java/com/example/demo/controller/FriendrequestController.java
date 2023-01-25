@@ -20,10 +20,10 @@ public class FriendrequestController {
         this.service = service;
     }
 
-    @PostMapping(value = "")
-    public ResponseEntity<Object> createFriendRequest(@RequestBody long idmaker, @RequestBody IdinputDto idreceiver) throws Exception{
+    @PostMapping(value = "/create/{makerid}/{receiverid}")
+    public ResponseEntity<Object> createFriendRequest(@PathVariable("makerid") long idmaker, @PathVariable("receiverid") long idreceiver) throws Exception{
 
-        long postid = service.createFriendrequest(idmaker, idreceiver.id);
+        long postid = service.createFriendrequest(idmaker, idreceiver);
 
         return new ResponseEntity<>(postid, HttpStatus.CREATED);
 

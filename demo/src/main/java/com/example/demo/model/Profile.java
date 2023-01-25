@@ -28,18 +28,23 @@ public class Profile {
 
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<ProfiletoProfile> friendlist;
 
     @OneToMany(mappedBy = "maker")
+    @JsonIgnore
     private List<Followrequest> followrequests;
 
     @OneToMany(mappedBy = "maker")
+    @JsonIgnore
     private List<Friendrequest> friendrequests;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<ProfiletoProfile> followerslist;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<ProfiletoProfile> followinglist;
 
     private String bioinformation;

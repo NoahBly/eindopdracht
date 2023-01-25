@@ -20,10 +20,10 @@ public class FollowrequestController {
         this.service = service;
     }
 
-    @PostMapping(value = "")
-    public ResponseEntity<Object> createFollowRequest(@RequestBody long idmaker, @RequestBody IdinputDto idreceiver) throws Exception{
+    @PostMapping(value = "/create/{makerid}/{receiverid}")
+    public ResponseEntity<Object> createFollowRequest(@PathVariable("makerid") long idmaker, @PathVariable("receiverid") long idreceiver) throws Exception{
 
-        long postid = service.createFollowrequest(idmaker, idreceiver.id);
+        long postid = service.createFollowrequest(idmaker, idreceiver);
 
         return new ResponseEntity<>(postid, HttpStatus.CREATED);
 
