@@ -5,6 +5,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,21 +32,23 @@ public class Profile {
     @JsonIgnore
     private List<ProfiletoProfile> friendlist;
 
-    @OneToMany(mappedBy = "maker")
+    @OneToMany(mappedBy = "receiver")
     @JsonIgnore
     private List<Followrequest> followrequests;
 
-    @OneToMany(mappedBy = "maker")
+    @OneToMany(mappedBy = "receiver")
     @JsonIgnore
     private List<Friendrequest> friendrequests;
 
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<ProfiletoProfile> followerslist;
+
+     @OneToMany(mappedBy = "user")
+     @JsonIgnore
+     private List<ProfiletoProfile2> followerslist;
+
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private List<ProfiletoProfile> followinglist;
+    private List<ProfiletoProfile3> followinglist;
 
     private String bioinformation;
 
@@ -118,19 +121,19 @@ public class Profile {
         this.friendlist = friendlist;
     }
 
-    public List<ProfiletoProfile> getFollowerslist() {
+    public List<ProfiletoProfile2> getFollowerslist() {
         return followerslist;
     }
 
-    public void setFollowerslist(List<ProfiletoProfile> followerslist) {
+    public void setFollowerslist(List<ProfiletoProfile2> followerslist) {
         this.followerslist = followerslist;
     }
 
-    public List<ProfiletoProfile> getFollowinglist() {
+    public List<ProfiletoProfile3> getFollowinglist() {
         return followinglist;
     }
 
-    public void setFollowinglist(List<ProfiletoProfile> followinglist) {
+    public void setFollowinglist(List<ProfiletoProfile3> followinglist) {
         this.followinglist = followinglist;
     }
 

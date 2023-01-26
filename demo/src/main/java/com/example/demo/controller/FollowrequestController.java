@@ -61,11 +61,19 @@ public class FollowrequestController {
     }
 
     @GetMapping(value = "/profile/{profileid}/followers")
-    public ResponseEntity<List<ProfiletoProfileDto>> getAllFollowersbyProfileID(@PathVariable("profileid") long profileid){
-        List<ProfiletoProfileDto> FollowprofileDtos = service.getAllFollowersbyProfileID(profileid);
+    public ResponseEntity<List<ProfiletoProfile2Dto>> getAllFollowersbyProfileID(@PathVariable("profileid") long profileid){
+        List<ProfiletoProfile2Dto> FollowprofileDtos = service.getAllFollowersbyProfileID(profileid);
 
         return ResponseEntity.ok().body(FollowprofileDtos);
     }
+
+    @GetMapping(value = "/profile/{profileid}/followings")
+    public ResponseEntity<List<ProfiletoProfile3Dto>> getAllFollowingsbyProfileID(@PathVariable("profileid") long profileid){
+        List<ProfiletoProfile3Dto> FollowingprofileDtos = service.getAllFollowingsbyProfileID(profileid);
+
+        return ResponseEntity.ok().body(FollowingprofileDtos);
+    }
+
 
 
     @DeleteMapping ("/profile/{profileid}/followers/{profilefollowerid}")

@@ -12,7 +12,7 @@ public class Followrequest {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "maker_id", referencedColumnName = "id")
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile maker;
 
     @ManyToOne

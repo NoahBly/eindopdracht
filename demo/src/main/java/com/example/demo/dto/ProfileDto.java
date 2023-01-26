@@ -20,9 +20,9 @@ public class ProfileDto {
     public String profileimage;
 
     public List<ProfiletoProfile> friendlist;
-   public List<ProfiletoProfile> followerslist;
+   public List<ProfiletoProfile2> followerslist;
 
-   public List<ProfiletoProfile> followinglist;
+   public List<ProfiletoProfile3> followinglist;
 
    public List<Friendrequest> friendrequests;
 
