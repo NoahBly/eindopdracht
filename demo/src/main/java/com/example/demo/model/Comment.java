@@ -19,7 +19,7 @@ public class Comment {
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     private Post post;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "commentmaker_id", referencedColumnName = "id")
     @JsonIgnore
     private Profile commentmaker;

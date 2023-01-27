@@ -33,8 +33,8 @@ public class UserController {
 
         dto.setPassword(passwordEncoder.encode(dto.password));
 
-        String newUsername = userService.createNormalUser(dto);
-        userService.addAuthority(newUsername, "ROLE_NORMAL_USER");
+        long newUserid = userService.createNormalUser(dto);
+        userService.addAuthority(newUserid, "ROLE_NORMAL_USER");
 
 
 
@@ -43,11 +43,11 @@ public class UserController {
     }
 
     @PostMapping(value = "/celebrity")
-    public ResponseEntity<UserDto> createCelebrityUserProfile(@RequestParam("userprofile") CreateUserProfileDto dto) throws Exception{
+    public ResponseEntity<UserDto> createCelebrityUserProfile(@RequestBody CreateUserProfileDto dto) throws Exception{
         dto.setPassword(passwordEncoder.encode(dto.password));
 
-        String newUsername = userService.createCelebUser(dto);
-        userService.addAuthority(newUsername, "ROLE_CELEB_USER");
+        long newUserid = userService.createCelebUser(dto);
+        userService.addAuthority(newUserid, "ROLE_CELEB_USER");
 
 
 
@@ -56,11 +56,11 @@ public class UserController {
     }
 
     @PostMapping(value = "/pageadmin")
-    public ResponseEntity<UserDto> createPageAdminUserProfile(@RequestParam("userprofile") CreateUserProfileDto dto) throws Exception{
+    public ResponseEntity<UserDto> createPageAdminUserProfile(@RequestBody CreateUserProfileDto dto) throws Exception{
         dto.setPassword(passwordEncoder.encode(dto.password));
 
-        String newUsername = userService.createPageAdminUser(dto);
-        userService.addAuthority(newUsername, "ROLE_PAGE_ADMIN_USER");
+        long newUserid = userService.createPageAdminUser(dto);
+        userService.addAuthority(newUserid, "ROLE_PAGE_ADMIN_USER");
 
 
 
@@ -75,7 +75,14 @@ public class UserController {
         return ResponseEntity.ok().body(userDtos);
     }
 
-    @GetMapping(value = "/{username}")
+    @GetMapping(value = "/id/{userid}")
+    public ResponseEntity<UserDto> getUserbyID(@PathVariable("userid") long userid) throws Exception {
+        UserDto optionalUser = userService.getUserbyID(userid);
+
+        return ResponseEntity.ok().body(optionalUser);
+    }
+
+    @GetMapping(value = "/username/{username}")
     public ResponseEntity<UserDto> getUser(@PathVariable("username") String username) throws Exception {
         UserDto optionalUser = userService.getUser(username);
 
@@ -83,29 +90,30 @@ public class UserController {
     }
 
 
-    @PutMapping(value = "/{username}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("username") String username, @RequestBody UserDto userdto) throws Exception {
-       userService.updateUser(username, userdto);
+
+    @PutMapping(value = "/{userid}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable("userid") long id, @RequestBody UserDto userdto) throws Exception {
+       userService.updateUser(id, userdto);
 
        return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping(value = "/{username}")
-    public ResponseEntity<Object> deleteUser(@PathVariable("username") String username) {
-        userService.deleteUser(username);
+    @DeleteMapping(value = "/{userid}")
+    public ResponseEntity<Object> deleteUser(@PathVariable("userid") long userid) {
+        userService.deleteUser(userid);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "/{username}/authorities")
-    public ResponseEntity<Object> getUserAuthorities(@PathVariable("username") String username) throws Exception {
-        return ResponseEntity.ok().body(userService.getAuthorities(username));
+    @GetMapping(value = "/{userid}/authorities")
+    public ResponseEntity<Object> getUserAuthorities(@PathVariable("userid") long userid) throws Exception {
+        return ResponseEntity.ok().body(userService.getAuthorities(userid));
     }
 
-    @PostMapping(value = "/{username}/authorities")
-    public ResponseEntity<Object> addUserAuthority(@PathVariable("username") String username, @RequestBody Map<String, Object> fields) {
+    @PostMapping(value = "/{userid}/authorities")
+    public ResponseEntity<Object> addUserAuthority(@PathVariable("userid") long userid, @RequestBody Map<String, Object> fields) {
         try {
             String authorityName = (String) fields.get("authority");
-            userService.addAuthority(username, authorityName);
+            userService.addAuthority(userid, authorityName);
             return ResponseEntity.noContent().build();
         }
         catch (Exception ex) {
@@ -113,9 +121,9 @@ public class UserController {
         }
     }
 
-    @DeleteMapping(value = "/{username}/authorities/{authority}")
-    public ResponseEntity<Object> deleteUserAuthority(@PathVariable("username") String username, @PathVariable("authority") String authority) throws Exception {
-        userService.removeAuthority(username, authority);
+    @DeleteMapping(value = "/{userid}/authorities/{authority}")
+    public ResponseEntity<Object> deleteUserAuthority(@PathVariable("userid") long id , @PathVariable("authority") String authority) throws Exception {
+        userService.removeAuthority(id, authority);
         return ResponseEntity.noContent().build();
     }
 

@@ -32,7 +32,7 @@ public class ProfileInputDto {
 
     public List<Post> posts;
 
-    public Comment commentpost;
+    public List<Comment> commentposts;
 
     public User user;
 
@@ -47,7 +47,7 @@ public class ProfileInputDto {
         profile1.setFollowerslist(profile.followerslist);
         profile1.setBioinformation(profile.bioinformation);
         profile1.setPosts(profile.posts);
-        profile1.setCommentpost(profile.commentpost);
+        profile1.setCommentposts(profile.commentposts);
         profile1.setFollowrequests(profile.followrequests);
         profile1.setFriendrequests(profile.friendrequests);
         profile1.setUser(profile.user);

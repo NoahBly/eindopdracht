@@ -56,12 +56,25 @@ public class UserService {
         return dto;
     }
 
+    public UserDto getUserbyID(long id) throws RecordNotFoundException {
+        UserDto dto = new UserDto();
+        Optional<User> user = repos.findById(id);
+        if (user.isPresent()) {
+            User user1 = repos.findById(id).get();
+            dto = fromUser(user1);
+        }else {
+            throw  new RecordNotFoundException("Cannot find" + id);
+        }
+        return dto;
+    }
+
+
 
     public boolean userExists(long id) {
         return repos.existsById(id);
     }
 
-    public String createNormalUser(CreateUserProfileDto dto) {
+    public long createNormalUser(CreateUserProfileDto dto) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         dto.setApikey(randomString);
 
@@ -82,10 +95,10 @@ public class UserService {
         repos2.save(profile1);
 
 
-        return newUser.getUsername();
+        return newUser.getId();
     }
 
-    public String createCelebUser(CreateUserProfileDto dto) {
+    public long createCelebUser(CreateUserProfileDto dto) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         dto.setApikey(randomString);
 
@@ -104,10 +117,10 @@ public class UserService {
         profile1.setUser(newuser2);
        repos2.save(profile1);
 
-        return newUser.getUsername();
+        return newUser.getId();
     }
 
-    public String createPageAdminUser(CreateUserProfileDto dto) {
+    public long createPageAdminUser(CreateUserProfileDto dto) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         dto.setApikey(randomString);
 
@@ -128,40 +141,41 @@ public class UserService {
        profile1.setUser(newuser2);
        repos2.save(profile1);
 
-        return newUser.getUsername();
+        return newUser.getId();
     }
 
-    public void deleteUser(String username) {
-        repos.deleteByUsername(username);
+    public void deleteUser(long id) {
+        repos.deleteById(id);
     }
 
-    public void updateUser(String username, UserDto newUser) throws Exception {
+    public void updateUser(long id, UserDto newUser) throws Exception {
 
         //if (!repos.existsById(username)) throw new Exception();
-        User user = repos.findByUsername(username);
+        User user = repos.findById(id).get();
         user.setPassword(newUser.getPassword());
         repos.save(user);
     }
 
-    public Set<Authority> getAuthorities(String username) throws Exception {
+    public Set<Authority> getAuthorities(long id) throws Exception {
        // if (!repos.existsById(username)) throw new Exception(username);
 
-        User user = repos.findByUsername(username);
+        User user = repos.findById(id).get();
         UserDto userDto = fromUser(user);
         return userDto.getAuthorities();
     }
 
-    public void addAuthority(String username, String authority) throws Exception {
+    public void addAuthority(long id, String authority) throws Exception {
 
         //if (!repos.existsById(username)) throw new Exception(username);
-        User user = repos.findByUsername(username);
+        User user = repos.findById(id).get();
+        String username = user.getUsername();
         user.addAuthority(new Authority(username, authority));
         repos.save(user);
     }
 
-    public void removeAuthority(String username, String authority) throws Exception {
+    public void removeAuthority(long id, String authority) throws Exception {
        // if (!repos.existsById(username)) throw new Exception(username);
-        User user = repos.findByUsername(username);
+        User user = repos.findById(id).get();
         Authority authorityToRemove = user.getAuthorities().stream().filter((a) -> a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
         user.removeAuthority(authorityToRemove);
         repos.save(user);

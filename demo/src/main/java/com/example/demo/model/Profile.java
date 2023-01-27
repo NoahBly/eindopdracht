@@ -56,9 +56,9 @@ public class Profile {
     @JsonIgnore
     private List<Post> posts;
 
-   @OneToOne(mappedBy = "commentmaker")
+   @OneToMany(mappedBy = "commentmaker")
    @JsonIgnore
-    private Comment commentpost;
+    private List<Comment> commentposts;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JsonIgnore
@@ -153,12 +153,12 @@ public class Profile {
         this.posts = posts;
     }
 
-   public Comment getCommentpost() {
-        return commentpost;
+   public List<Comment> getCommentposts() {
+        return commentposts;
     }
 
-   public void setCommentpost(Comment commentpost) {
-       this.commentpost = commentpost;
+   public void setCommentposts(List<Comment> commentpost) {
+       this.commentposts = commentposts;
     }
 
     public User getUser() {

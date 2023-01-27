@@ -32,7 +32,7 @@ public class ProfileDto {
 
    public List<Post> posts;
 
-   public Comment commentpost;
+   public List<Comment> commentposts;
 
    public User user;
     public static ProfileDto fromProfile(Profile profile) {
@@ -46,7 +46,7 @@ public class ProfileDto {
         profile1.followerslist = profile.getFollowerslist();
         profile1.bioinformation = profile.getBioinformation();
         profile1.posts = profile.getPosts();
-        profile1.commentpost = profile.getCommentpost();
+        profile1.commentposts = profile.getCommentposts();
         profile1.followrequests = profile.getFollowrequests();
         profile1.friendrequests = profile.getFriendrequests();
         profile1.user = profile.getUser();
