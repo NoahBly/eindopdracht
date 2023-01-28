@@ -159,22 +159,18 @@ public class FollowrequestService {
             Followerslist2.add(ProfiletoProfile2Dto.toP2P(profile));
         }
 
-        Optional<ProfiletoProfile> profiletoprofile1 = repos3.findById(id2);
+        Optional<ProfiletoProfile2> profiletoprofile1 = repos4.findById(id2);
         if (profiletoprofile1.isEmpty()) {
             throw new RecordNotFoundException("ID can not be found");
         } else {
-            ProfiletoProfile profiletoprofile2 = repos3.findById(id2).get();
+            ProfiletoProfile2 profiletoprofile2 = repos4.findById(id2).get();
             Followerslist2.remove(profiletoprofile2);
             Profile follower = profiletoprofile2.getFriend();
 
             List<ProfiletoProfile3>Followinglist = follower.getFollowinglist();
             Profile profile3 = repos2.findById(id).get();
 
-            for(ProfiletoProfile3 p2p: Followinglist) {
-                if(p2p.getFriend().equals(profile3)){
-                    Followinglist.remove(p2p);
-                }
-            }
+            Followinglist.removeIf(p2p -> p2p.getFriend().equals(profile3));
 
             follower.setFollowinglist(Followinglist);
             profile3.setFollowerslist(Followerslist2);
@@ -209,20 +205,16 @@ public class FollowrequestService {
             Followinglist2.add(ProfiletoProfile3Dto.toP2P(profile));
         }
 
-        Optional<ProfiletoProfile> profiletoprofile1 = repos3.findById(id2);
+        Optional<ProfiletoProfile3> profiletoprofile1 = repos5.findById(id2);
         if (profiletoprofile1.isEmpty()) {
             throw new RecordNotFoundException("ID can not be found");
         } else {
-            ProfiletoProfile profiletoprofile2 = repos3.findById(id2).get();
+            ProfiletoProfile3 profiletoprofile2 = repos5.findById(id2).get();
             Followinglist2.remove(profiletoprofile2);
             Profile followed = profiletoprofile2.getFriend();
             List<ProfiletoProfile2>followerslist = followed.getFollowerslist();
             Profile profile3 = repos2.findById(id).get();
-            for(ProfiletoProfile2 p2p: followerslist) {
-                if(p2p.getFriend().equals(profile3)) {
-                    followerslist.remove(p2p);
-                }
-            }
+            followerslist.removeIf(p2p -> p2p.getFriend().equals(profile3));
             followed.setFollowerslist(followerslist);
             profile3.setFollowinglist(Followinglist2);
             repos2.save(profile3);

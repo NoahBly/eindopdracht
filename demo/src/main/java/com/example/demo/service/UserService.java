@@ -153,6 +153,7 @@ public class UserService {
         //if (!repos.existsById(username)) throw new Exception();
         User user = repos.findById(id).get();
         user.setPassword(newUser.getPassword());
+        user.setEmail(newUser.getEmail());
         repos.save(user);
     }
 

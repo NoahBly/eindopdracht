@@ -158,17 +158,13 @@ public class FriendrequestService {
         } else {
             ProfiletoProfile profiletoprofile2 = repos4.findById(id2).get();
             Friendlist2.remove(profiletoprofile2);
-            Profile friend = profiletoprofile2.getFriend();
-            List<ProfiletoProfile> friendlist3 = friend.getFriendlist();
             Profile profile3 = repos2.findById(id).get();
-            for(ProfiletoProfile p2p: friendlist3){
-                if(p2p.getFriend().equals(profile3)) {
-                    friendlist3.remove(p2p);
-                }
-            }
-            friend.setFriendlist(friendlist3);
             profile3.setFriendlist(Friendlist2);
             repos2.save(profile3);
+            Profile friend = profiletoprofile2.getFriend();
+            List<ProfiletoProfile> friendlist3 = friend.getFriendlist();
+            friendlist3.removeIf(p2p -> p2p.getFriend().equals(profile3));
+            friend.setFriendlist(friendlist3);
             repos2.save(friend);
         }
     }
