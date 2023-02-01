@@ -119,6 +119,10 @@ public class FollowrequestService {
             proftoprof2.setFriend(maker);
             repos5.save(proftoprof);
             repos4.save(proftoprof2);
+            proftoprof.setOtherside(proftoprof2);
+            repos5.save(proftoprof);
+            proftoprof2.setOtherside(proftoprof);
+            repos4.save(proftoprof2);
 
             List<ProfiletoProfile3> followinglist2 = maker.getFollowinglist();
             List<ProfiletoProfile2> followerslist = receiver.getFollowerslist();
@@ -164,18 +168,19 @@ public class FollowrequestService {
             throw new RecordNotFoundException("ID can not be found");
         } else {
             ProfiletoProfile2 profiletoprofile2 = repos4.findById(id2).get();
-            Followerslist2.remove(profiletoprofile2);
-            Profile follower = profiletoprofile2.getFriend();
+            repos4.delete(profiletoprofile2);
+           // Followerslist2.remove(profiletoprofile2);
+          //  Profile follower = profiletoprofile2.getFriend();
 
-            List<ProfiletoProfile3>Followinglist = follower.getFollowinglist();
-            Profile profile3 = repos2.findById(id).get();
+           // List<ProfiletoProfile3>Followinglist = follower.getFollowinglist();
+          //  Profile profile3 = repos2.findById(id).get();
 
-            Followinglist.removeIf(p2p -> p2p.getFriend().equals(profile3));
+          //  Followinglist.removeIf(p2p -> p2p.getFriend().equals(profile3));
 
-            follower.setFollowinglist(Followinglist);
-            profile3.setFollowerslist(Followerslist2);
-            repos2.save(profile3);
-            repos2.save(follower);
+           // follower.setFollowinglist(Followinglist);
+           // profile3.setFollowerslist(Followerslist2);
+           // repos2.save(profile3);
+           // repos2.save(follower);
         }
     }
 
@@ -210,15 +215,16 @@ public class FollowrequestService {
             throw new RecordNotFoundException("ID can not be found");
         } else {
             ProfiletoProfile3 profiletoprofile2 = repos5.findById(id2).get();
-            Followinglist2.remove(profiletoprofile2);
-            Profile followed = profiletoprofile2.getFriend();
-            List<ProfiletoProfile2>followerslist = followed.getFollowerslist();
-            Profile profile3 = repos2.findById(id).get();
-            followerslist.removeIf(p2p -> p2p.getFriend().equals(profile3));
-            followed.setFollowerslist(followerslist);
-            profile3.setFollowinglist(Followinglist2);
-            repos2.save(profile3);
-            repos2.save(followed);
+            repos5.delete(profiletoprofile2);
+         //   Followinglist2.remove(profiletoprofile2);
+        //    Profile followed = profiletoprofile2.getFriend();
+         //   List<ProfiletoProfile2>followerslist = followed.getFollowerslist();
+         //   Profile profile3 = repos2.findById(id).get();
+         //   followerslist.removeIf(p2p -> p2p.getFriend().equals(profile3));
+          //  followed.setFollowerslist(followerslist);
+         //   profile3.setFollowinglist(Followinglist2);
+          //  repos2.save(profile3);
+          //  repos2.save(followed);
         }
     }
 

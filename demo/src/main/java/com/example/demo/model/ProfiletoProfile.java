@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,10 @@ public class ProfiletoProfile {
 
     @ManyToOne
     private Profile friend;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    private ProfiletoProfile otherside;
 
     public Long getId() {
         return id;
@@ -38,5 +44,13 @@ public class ProfiletoProfile {
 
     public void setFriend(Profile friend) {
         this.friend = friend;
+    }
+
+    public ProfiletoProfile getOtherside() {
+        return otherside;
+    }
+
+    public void setOtherside(ProfiletoProfile otherside) {
+        this.otherside = otherside;
     }
 }

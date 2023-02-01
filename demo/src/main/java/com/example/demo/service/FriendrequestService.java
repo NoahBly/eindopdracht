@@ -117,6 +117,11 @@ public class FriendrequestService {
             proftoprof2.setUser(receiver);
             proftoprof2.setFriend(maker);
             repos4.save(proftoprof);
+
+            repos4.save(proftoprof2);
+            proftoprof.setOtherside(proftoprof2);
+            repos4.save(proftoprof);
+            proftoprof2.setOtherside(proftoprof);
             repos4.save(proftoprof2);
             List<ProfiletoProfile>friendlist = maker.getFriendlist();
             friendlist.add(proftoprof);
@@ -157,15 +162,17 @@ public class FriendrequestService {
             throw new RecordNotFoundException("ID can not be found");
         } else {
             ProfiletoProfile profiletoprofile2 = repos4.findById(id2).get();
-            Friendlist2.remove(profiletoprofile2);
-            Profile profile3 = repos2.findById(id).get();
-            profile3.setFriendlist(Friendlist2);
-            repos2.save(profile3);
-            Profile friend = profiletoprofile2.getFriend();
-            List<ProfiletoProfile> friendlist3 = friend.getFriendlist();
-            friendlist3.removeIf(p2p -> p2p.getFriend().equals(profile3));
-            friend.setFriendlist(friendlist3);
-            repos2.save(friend);
+
+            repos4.delete(profiletoprofile2);
+      //      Friendlist2.remove(profiletoprofile2);
+      //      Profile profile3 = repos2.findById(id).get();
+      //      profile3.setFriendlist(Friendlist2);
+       //     repos2.save(profile3);
+       //     Profile friend = profiletoprofile2.getFriend();
+       //     List<ProfiletoProfile> friendlist3 = friend.getFriendlist();
+       //     friendlist3.removeIf(p2p -> p2p.getFriend().equals(profile3));
+       //     friend.setFriendlist(friendlist3);
+        //    repos2.save(friend);
         }
     }
 
