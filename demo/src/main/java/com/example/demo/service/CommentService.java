@@ -9,6 +9,7 @@ import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.ProfileRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -89,9 +90,9 @@ public class CommentService {
             throw new RecordNotFoundException("Cannot find id:" + commentid);
         } else {
             Comment comment2 = repos.findById(commentid).get();
-            Principal principal = (Principal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String username = principal.getName();
-            if (username == comment2.getCommentmaker().getUser().getUsername() || username == comment2.getPost().getProfile().getUser().getUsername()) {
+            User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String username = principal.getUsername();
+            if (username.equals(comment2.getCommentmaker().getUser().getUsername()) || username.equals(comment2.getPost().getProfile().getUser().getUsername())) {
                 repos.deleteById(commentid);
             }
         }
