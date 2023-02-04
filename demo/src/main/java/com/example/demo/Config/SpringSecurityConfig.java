@@ -59,6 +59,56 @@ public class SpringSecurityConfig  {
 //                .antMatchers("/**").permitAll()
                .antMatchers(HttpMethod.POST, "/users/normal").permitAll()
               // .antMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
+               .antMatchers(HttpMethod.POST, "/users/celebrity").permitAll()
+               .antMatchers(HttpMethod.POST, "/users/pageadmin").permitAll()
+               .antMatchers(HttpMethod.GET,"/users/id/{userid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/users/username/{username}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.PUT,"/users//{userid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.DELETE,"/users//{userid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/users/{userid}/authorities").hasRole("ADMIN")
+               .antMatchers(HttpMethod.POST,"/users/{userid}/authorities").hasRole("ADMIN")
+               .antMatchers(HttpMethod.DELETE,"/users/{userid}/authorities/{authority}").hasRole("ADMIN")
+
+               .antMatchers(HttpMethod.POST,"/profiles/{profileid}/addProfileImage").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/profiles/{profileid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/profiles/user/{userid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/profiles").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/profiles/profile/{profilename}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.DELETE,"/profiles/{profileid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.PUT,"/profiles/{profileid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+
+               .antMatchers(HttpMethod.POST,"/posts/{profileid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.POST,"/posts/{profileid}/addPostImageVideo").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/posts/post/{postid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/posts/{profileid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.DELETE,"/posts/post/{postid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.PUT,"/posts/post/{postid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+
+               .antMatchers(HttpMethod.POST,"/friendrequests/create/{makerid}/{receiverid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/friendrequests/{friendrequestid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/friendrequests/profile/{profileid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+
+               .antMatchers(HttpMethod.DELETE,"/friendrequests/{friendrequestid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.PUT,"/friendrequests/{friendrequestid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/friendrequests/profile/{profileid}/friends").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.DELETE,"/friendrequests/profile/{profileid}/friends/{profilefriendid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+
+               .antMatchers(HttpMethod.POST,"/followrequests/create/{makerid}/{receiverid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/followrequests/{followrequestid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/followrequests/profile/{profileid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.DELETE,"/followrequests/{followrequestid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.PUT,"/followrequests/{followrequestid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/followrequests/profile/{profileid}/followers").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/followrequests/profile/{profileid}/followings").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.DELETE,"/followrequests/profile/{profileid}/followers/{profilefollowerid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.DELETE,"/followrequests/profile/{profileid}/followers/{profilefollowingid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+
+               .antMatchers(HttpMethod.POST,"/comments/post/{postid}/profile/{profileidmaker}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/comments/{commentid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/comments/post/{postid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.DELETE,"/comments/{commentid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+
+
 
                // Je mag meerdere paths tegelijk definieren
              //  .antMatchers("/cimodules", "/remotecontrollers", "/televisions", "/wallbrackets").hasAnyRole("ADMIN", "USER")
