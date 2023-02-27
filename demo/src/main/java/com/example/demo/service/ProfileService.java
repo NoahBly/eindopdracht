@@ -8,11 +8,14 @@ import com.example.demo.model.Profile;
 import com.example.demo.model.User;
 import com.example.demo.repository.ProfileRepository;
 import com.example.demo.repository.UserRepository;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.net.MalformedURLException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -110,6 +113,34 @@ public class ProfileService {
         } newProfile.setProfileimage(filename);
         repos.save(newProfile);
         return filename;
+    }
+
+    public Resource downLoadFile(long profileid) {
+
+        Optional<Profile> profile = repos.findById(profileid);
+
+        if (profile.isEmpty()) {
+            throw new RecordNotFoundException("ID can not be found");
+        } else {
+            Profile newProfile = repos.findById(profileid).get();
+            String fileName = newProfile.getProfileimage();
+
+            Path path = Paths.get("uploads").toAbsolutePath().resolve(fileName);
+
+            Resource resource;
+
+            try {
+                resource = new UrlResource(path.toUri());
+            } catch (MalformedURLException e) {
+                throw new RuntimeException("Issue in reading the file", e);
+            }
+
+            if (resource.exists() && resource.isReadable()) {
+                return resource;
+            } else {
+                throw new RuntimeException("the file doesn't exist or not readable");
+            }
+        }
     }
 
     public ProfileDto getProfilebyID(long profileid) {

@@ -8,10 +8,13 @@ import com.example.demo.model.Post;
 import com.example.demo.model.Profile;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.ProfileRepository;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -90,6 +93,34 @@ public class PostService {
             PostDto newPostDto = PostDto.fromPost(newPost);
             return newPostDto;
 
+        }
+    }
+
+    public Resource downLoadPostfile(long postid) {
+
+        Optional<Post> post1 = repos.findById(postid);
+
+        if (post1.isEmpty()) {
+            throw new RecordNotFoundException("ID can not be found");
+        } else {
+            Post newPost = repos.findById(postid).get();
+            String fileName = newPost.getImagevideo();
+
+            Path path = Paths.get("uploads").toAbsolutePath().resolve(fileName);
+
+            Resource resource;
+
+            try {
+                resource = new UrlResource(path.toUri());
+            } catch (MalformedURLException e) {
+                throw new RuntimeException("Issue in reading the file", e);
+            }
+
+            if (resource.exists() && resource.isReadable()) {
+                return resource;
+            } else {
+                throw new RuntimeException("the file doesn't exist or not readable");
+            }
         }
     }
 

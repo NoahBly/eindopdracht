@@ -69,7 +69,8 @@ public class SpringSecurityConfig  {
                .antMatchers(HttpMethod.POST,"/users/{userid}/authorities").hasRole("ADMIN")
                .antMatchers(HttpMethod.DELETE,"/users/{userid}/authorities/{authority}").hasRole("ADMIN")
 
-               .antMatchers(HttpMethod.POST,"/profiles/{profileid}/addProfileImage").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.POST,"/profiles/{profileid}/addProfileImage").permitAll()
+               .antMatchers(HttpMethod.GET,"/profiles/download/{profileid}").permitAll()
                .antMatchers(HttpMethod.GET,"/profiles/{profileid}").permitAll()
                .antMatchers(HttpMethod.GET,"/profiles/user/{userid}").permitAll()
                .antMatchers(HttpMethod.GET,"/profiles").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
@@ -78,7 +79,7 @@ public class SpringSecurityConfig  {
                .antMatchers(HttpMethod.PUT,"/profiles/{profileid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
 
                .antMatchers(HttpMethod.POST,"/posts/{profileid}").permitAll()
-               .antMatchers(HttpMethod.POST,"/posts/{profileid}/addPostImageVideo").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.POST,"/posts/{profileid}/addPostImageVideo").permitAll()
                .antMatchers(HttpMethod.GET,"/posts/post/{postid}").permitAll()
                .antMatchers(HttpMethod.GET,"/posts/{profileid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
                .antMatchers(HttpMethod.DELETE,"/posts/post/{postid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
