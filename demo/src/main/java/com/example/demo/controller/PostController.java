@@ -39,7 +39,7 @@ public class PostController {
 
     }
 
-    @PostMapping(value = "/{postid}/addPostImageVideo")
+    @PostMapping(value = "/step/{postid}/addPostImageVideo",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> addPostImageVideo(@RequestParam("file")MultipartFile file, @PathVariable("postid") long id) throws Exception{
         String filename = service.addPostimagevideo(id,file);
 
@@ -60,7 +60,7 @@ public class PostController {
 
 
     @GetMapping("/downloadpostfile/{postid}")
-    ResponseEntity<Resource> Findpostfilebypostid(@PathVariable long postid, HttpServletRequest request) {
+    ResponseEntity<Resource> Findpostfilebypostid(@PathVariable("postid") long postid, HttpServletRequest request) {
 
         Resource resource = service.downLoadPostfile(postid);
 

@@ -79,9 +79,10 @@ public class SpringSecurityConfig  {
                .antMatchers(HttpMethod.PUT,"/profiles/{profileid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
 
                .antMatchers(HttpMethod.POST,"/posts/{profileid}").permitAll()
-               .antMatchers(HttpMethod.POST,"/posts/{profileid}/addPostImageVideo").permitAll()
+               .antMatchers(HttpMethod.POST,"/posts/step/{postid}/addPostImageVideo").permitAll()
                .antMatchers(HttpMethod.GET,"/posts/post/{postid}").permitAll()
-               .antMatchers(HttpMethod.GET,"/posts/{profileid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.GET,"/posts/{profileid}").permitAll()
+               .antMatchers(HttpMethod.GET,"/posts//downloadpostfile/{postid}").permitAll()
                .antMatchers(HttpMethod.DELETE,"/posts/post/{postid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
                .antMatchers(HttpMethod.PUT,"/posts/post/{postid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
 
