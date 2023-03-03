@@ -60,7 +60,7 @@ public class Profile {
    @JsonIgnore
     private List<Comment> commentposts;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JsonIgnore
     //@JoinColumn(name = "profile_id", insertable=false, updatable=false)
     private User user;

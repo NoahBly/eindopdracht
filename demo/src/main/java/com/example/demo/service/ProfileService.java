@@ -4,17 +4,14 @@ import com.example.demo.dto.CreateUserProfileDto;
 import com.example.demo.dto.ProfileDto;
 import com.example.demo.dto.ProfileInputDto;
 import com.example.demo.exceptions.RecordNotFoundException;
-import com.example.demo.model.Profile;
-import com.example.demo.model.User;
-import com.example.demo.repository.ProfileRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -29,10 +26,21 @@ public class ProfileService {
 
     private final ProfileRepository repos;
     private final UserRepository repos2;
+    private final ProfiletoProfile3Repository repos3;
 
-    public ProfileService(ProfileRepository repos,UserRepository repos2) {
+    private final ProfiletoProfile2Repository repos4;
+
+    private final ProfiletoProfileRepository repos5;
+
+    private final PostRepository repos6;
+
+    public ProfileService(ProfileRepository repos, UserRepository repos2, ProfiletoProfile3Repository repos3,ProfiletoProfile2Repository repos4,ProfiletoProfileRepository repos5, PostRepository repos6) {
         this.repos = repos;
         this.repos2 = repos2;
+        this.repos3 = repos3;
+        this.repos4 = repos4;
+        this.repos5 = repos5;
+        this.repos6 = repos6;
     }
     private final Path root = Paths.get("uploads");
 
@@ -197,21 +205,58 @@ public class ProfileService {
         ProfileDto newprofile = getProfilebyID(profileid);
         Profile newprofile2 = ProfileInputDto.toProfile(newprofile);
 
-        if(!newprofile2.getName().equals(profiledto.name)) {
+        if(profiledto.name!=null && !newprofile2.getName().equals(profiledto.name)) {
             newprofile2.setName(profiledto.name);
-        } if(!newprofile2.getBioinformation().equals(profiledto.bioinformation)) {
+        }
+
+
+        if(profiledto.bioinformation != null && newprofile2.getBioinformation() != null && !newprofile2.getBioinformation().equals(profiledto.bioinformation)) {
             newprofile2.setBioinformation(profiledto.bioinformation);
-        } if(!newprofile2.getFollowerslist().equals(profiledto.followerslist)) {
-            newprofile2.setFollowerslist(profiledto.followerslist);
-        } if(!newprofile2.getFollowinglist().equals(profiledto.followinglist)) {
-            newprofile2.setFollowinglist(profiledto.followinglist);
-        } if(!newprofile2.getFriendlist().equals(profiledto.friendlist)) {
-            newprofile2.setFriendlist(profiledto.friendlist);
-        }  if(!newprofile2.getPosts().equals(profiledto.posts)) {
-            newprofile2.setPosts(profiledto.posts);
-        } if(!newprofile2.getProfileimage().equals(profiledto.profileimage)) {
+        }
+        else{newprofile2.setBioinformation(profiledto.bioinformation);}
+
+        if(profiledto.followerslist!= null && !newprofile2.getFollowerslist().equals(profiledto.followerslist)) {
+            List<ProfiletoProfile2> followerList = new ArrayList<>();
+
+            for(ProfiletoProfile2 follower : profiledto.followerslist){
+                followerList.add(repos4.findById(follower.getId()).orElseThrow(()->new RecordNotFoundException("followerslist not found")));
+            }
+            newprofile2.setFollowerslist(followerList);
+        }
+
+        if(profiledto.followinglist != null && !newprofile2.getFollowinglist().equals(profiledto.followinglist)) {
+            //---------------------------------------
+            List<ProfiletoProfile3> followingList = new ArrayList<>();
+            for(ProfiletoProfile3 following : profiledto.followinglist){
+                followingList.add(repos3.findById(following.getId()).orElseThrow(()->new RecordNotFoundException("followinglist not found")));
+            }
+            newprofile2.setFollowinglist(followingList);
+            //---------------------------
+        } if(profiledto.friendlist != null && !newprofile2.getFriendlist().equals(profiledto.friendlist)) {
+            List<ProfiletoProfile> friendList = new ArrayList<>();
+            for(ProfiletoProfile friend : profiledto.friendlist){
+                friendList.add(repos5.findById(friend.getId()).orElseThrow(()->new RecordNotFoundException("friendlist not found")));
+            }
+            newprofile2.setFriendlist(friendList);
+        }
+
+
+
+        if(profiledto.posts != null && !newprofile2.getPosts().equals(profiledto.posts)) {
+            List<Post> posts = new ArrayList<>();
+            for(Post post : profiledto.posts){
+                posts.add(repos6.findById(post.getId()).orElseThrow(()->new RecordNotFoundException("friendlist not found")));
+            }
+
+            newprofile2.setPosts(posts);
+        }
+
+        if(newprofile2.getProfileimage() != null) {
+        if(!newprofile2.getProfileimage().equals(profiledto.profileimage)) {
             newprofile2.setProfileimage(profiledto.profileimage);
-        } if(!newprofile2.getType().equals(profiledto.type)) {
+        }}else {newprofile2.setProfileimage(profiledto.profileimage);}
+
+        if(profiledto.type != null && !newprofile2.getType().equals(profiledto.type)) {
             newprofile2.setType(profiledto.type);
         }
 
