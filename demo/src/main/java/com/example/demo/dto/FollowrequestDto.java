@@ -12,18 +12,18 @@ public class FollowrequestDto {
     public long id;
 
     @NotBlank
-    public Profile maker;
+    public ProfileDto maker;
 
     @NotBlank
-    public Profile receiver;
+    public ProfileDto receiver;
 
 
 
     public static FollowrequestDto fromFollowrequest(Followrequest followrequest1) {
        FollowrequestDto followrequest2 = new FollowrequestDto();
         followrequest2.id = followrequest1.getId();
-        followrequest2.maker = followrequest1.getMaker();
-        followrequest2.receiver = followrequest1.getReceiver();
+        followrequest2.maker = ProfileDto.fromProfile(followrequest1.getMaker());
+        followrequest2.receiver = ProfileDto.fromProfile(followrequest1.getReceiver());
 
         return followrequest2;
     }

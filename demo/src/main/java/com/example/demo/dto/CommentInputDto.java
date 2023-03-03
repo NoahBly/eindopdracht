@@ -14,18 +14,18 @@ public class CommentInputDto {
     public String comment;
 
     @NotBlank
-    public Post post;
+    public PostDto post;
 
     @NotBlank
-    public Profile commentmaker;
+    public ProfileDto commentmaker;
 
 
     public static Comment toComment(CommentDto comment1) {
         Comment comment2 = new Comment();
         comment2.setId(comment1.id);
-        comment2.setPost(comment1.post);
+        comment2.setPost(PostInputDto.toPost(comment1.post));
         comment2.setComment(comment1.comment);
-        comment2.setCommentmaker(comment1.commentmaker);
+        comment2.setCommentmaker(ProfileInputDto.toProfile(comment1.commentmaker));
 
         return comment2;
     }

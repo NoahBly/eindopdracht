@@ -11,17 +11,17 @@ public class ProfiletoProfile2Dto {
     public long id;
 
     @NotBlank
-    public Profile user;
+    public ProfileDto user;
 
     @NotBlank
-    public Profile friend;
+    public ProfileDto friend;
 
     public static ProfiletoProfile2Dto fromP2P(ProfiletoProfile2 P2P) {
         ProfiletoProfile2Dto P2P1 = new ProfiletoProfile2Dto();
 
         P2P1.id = P2P.getId();
-        P2P1.user = P2P.getUser();
-        P2P1.friend = P2P.getFriend();
+        P2P1.user = ProfileDto.fromProfile(P2P.getUser());
+        P2P1.friend = ProfileDto.fromProfile(P2P.getFriend());
 
         return P2P1;
     }
@@ -29,8 +29,8 @@ public class ProfiletoProfile2Dto {
     public static ProfiletoProfile2 toP2P(ProfiletoProfile2Dto P2P) {
         ProfiletoProfile2 P2P1 = new ProfiletoProfile2();
         P2P1.setId(P2P.id);
-        P2P1.setUser(P2P.user);
-        P2P1.setFriend(P2P.friend);
+        P2P1.setUser(ProfileInputDto.toProfile(P2P.user));
+        P2P1.setFriend(ProfileInputDto.toProfile(P2P.friend));
 
         return P2P1;
     }

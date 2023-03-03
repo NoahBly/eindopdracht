@@ -30,9 +30,9 @@ public class CreateUserProfileDto {
 
     public String type;
 
-    public Profile profile;
+    public ProfileDto profile;
 
-    public User user;
+    public UserDto user;
 
 
     public long getId() {
@@ -115,19 +115,19 @@ public class CreateUserProfileDto {
         this.type = type;
     }
 
-    public Profile getProfile() {
+    public ProfileDto getProfile() {
         return profile;
     }
 
-    public void setProfile(Profile profile) {
+    public void setProfile(ProfileDto profile) {
         this.profile = profile;
     }
 
-    public User getUser() {
+    public UserDto getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDto user) {
         this.user = user;
     }
 }

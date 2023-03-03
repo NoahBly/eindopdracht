@@ -17,10 +17,26 @@ public class UserDto {
     public String email;
 
     public long profile_id;
+
+    public UserDto(long id, String username, String password, Boolean enabled, String apikey, String email, long profile_id, Set<Authority> authorities, ProfileDto profile) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.apikey = apikey;
+        this.email = email;
+        this.profile_id = profile_id;
+        this.authorities = authorities;
+        this.profile = profile;
+    }
+
+    public UserDto() {
+    }
+
     @JsonSerialize
     public Set<Authority> authorities;
 
-    public Profile profile;
+    public ProfileDto profile;
 
     public long getId() {
         return id;
@@ -62,6 +78,7 @@ public class UserDto {
         this.password = password;
     }
 
+
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
@@ -78,11 +95,11 @@ public class UserDto {
         this.authorities = authorities;
     }
 
-    public Profile getProfile() {
+    public ProfileDto getProfile() {
         return profile;
     }
 
-    public void setProfile(Profile profile) {
+    public void setProfile(ProfileDto profile) {
         this.profile = profile;
     }
 
@@ -103,8 +120,23 @@ public class UserDto {
         dto.password = user.getPassword();
         dto.username = user.getUsername();
         dto.profile_id = user.getProfileId();
-        dto.profile = user.getProfile();
+        dto.profile = ProfileDto.fromProfile(user.getProfile());
 
         return dto;
+    }
+
+
+    public static User toUser(UserDto user) {
+        User user1 = new User();
+        user1.setId(user.getId()) ;
+        user1.setApikey(user.getApikey());
+        user1.setAuthorities(user.getAuthorities());
+        user1.setEmail(user.getEmail());
+        user1.setPassword(user.getPassword());
+        user1.setUsername(user.getUsername());
+        user1.setProfileId( user.getProfileId());
+        user1.setProfile(ProfileInputDto.toProfile(user.getProfile()));
+
+        return user1;
     }
 }

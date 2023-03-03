@@ -24,7 +24,7 @@ public class User {
     @Column(nullable = false, length = 255)
     private String password;
 
-
+    private Boolean enabled;
 @Column
 private String apikey;
 
@@ -71,7 +71,13 @@ private Set<Authority> authorities = new HashSet<>();
     }
 
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
 
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 
     public String getApikey() {
         return apikey;
@@ -92,6 +98,10 @@ private Set<Authority> authorities = new HashSet<>();
 
     public Set<Authority> getAuthorities() {
         return authorities;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
     }
 
     public void addAuthority(Authority authority) {

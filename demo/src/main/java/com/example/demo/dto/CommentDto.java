@@ -18,18 +18,18 @@ public class CommentDto {
     public String comment;
 
     @NotBlank
-    public Post post;
+    public PostDto post;
 
     @NotBlank
-    public Profile commentmaker;
+    public ProfileDto commentmaker;
 
 
     public static CommentDto fromComment(Comment comment1) {
         CommentDto comment2 = new CommentDto();
         comment2.id = comment1.getId();
-        comment2.post = comment1.getPost();
+        comment2.post = PostDto.fromPost(comment1.getPost());
         comment2.comment = comment1.getComment();
-        comment2.commentmaker = comment1.getCommentmaker();
+        comment2.commentmaker = ProfileDto.fromProfile(comment1.getCommentmaker());
 
         return comment2;
     }

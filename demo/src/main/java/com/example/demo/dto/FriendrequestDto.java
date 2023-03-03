@@ -12,18 +12,18 @@ public class FriendrequestDto {
     public long id;
 
     @NotBlank
-    public Profile maker;
+    public ProfileDto maker;
 
     @NotBlank
-    public Profile receiver;
+    public ProfileDto receiver;
 
 
 
     public static FriendrequestDto fromFriendrequest(Friendrequest friendrequest1) {
         FriendrequestDto friendrequest2 = new FriendrequestDto();
         friendrequest2.id = friendrequest1.getId();
-        friendrequest2.maker = friendrequest1.getMaker();
-        friendrequest2.receiver = friendrequest1.getReceiver();
+        friendrequest2.maker = ProfileDto.fromProfile(friendrequest1.getMaker());
+        friendrequest2.receiver =ProfileDto.fromProfile(friendrequest1.getReceiver());
 
         return friendrequest2;
     }

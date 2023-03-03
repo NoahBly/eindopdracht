@@ -192,7 +192,7 @@ public class UserService {
         dto.apikey = user.getApikey();
         dto.email = user.getEmail();
         dto.authorities = user.getAuthorities();
-        dto.profile = user.getProfile();
+        dto.profile = ProfileDto.fromProfile(user.getProfile());
         dto.profile_id = user.getProfileId();
 
         return dto;

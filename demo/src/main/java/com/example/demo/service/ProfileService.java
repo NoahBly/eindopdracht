@@ -58,7 +58,7 @@ public class ProfileService {
         Profile profile1 = new Profile();
 
         profile1.setName(profiledto.profilename);
-        profile1.setType("NORMAL");
+        profile1.setType("CELEBRITY");
 
 
         Profile profile2 = repos.save(profile1);
@@ -74,7 +74,7 @@ public class ProfileService {
         Profile profile1 = new Profile();
 
         profile1.setName(profiledto.profilename);
-        profile1.setType("NORMAL");
+        profile1.setType("PAGEADMIN");
 
 
         Profile profile2 = repos.save(profile1);
@@ -197,28 +197,31 @@ public class ProfileService {
         ProfileDto newprofile = getProfilebyID(profileid);
         Profile newprofile2 = ProfileInputDto.toProfile(newprofile);
 
-        if(!newprofile2.getName().equals(profiledto.name)) {
+        if (!newprofile2.getName().equals(profiledto.name)) {
             newprofile2.setName(profiledto.name);
-        } if(!newprofile2.getBioinformation().equals(profiledto.bioinformation)) {
-            newprofile2.setBioinformation(profiledto.bioinformation);
-        } if(!newprofile2.getFollowerslist().equals(profiledto.followerslist)) {
-            newprofile2.setFollowerslist(profiledto.followerslist);
-        } if(!newprofile2.getFollowinglist().equals(profiledto.followinglist)) {
-            newprofile2.setFollowinglist(profiledto.followinglist);
-        } if(!newprofile2.getFriendlist().equals(profiledto.friendlist)) {
-            newprofile2.setFriendlist(profiledto.friendlist);
-        }  if(!newprofile2.getPosts().equals(profiledto.posts)) {
-            newprofile2.setPosts(profiledto.posts);
-        } if(!newprofile2.getProfileimage().equals(profiledto.profileimage)) {
-            newprofile2.setProfileimage(profiledto.profileimage);
-        } if(!newprofile2.getType().equals(profiledto.type)) {
-            newprofile2.setType(profiledto.type);
         }
+        if (newprofile2.getBioinformation() != null) {
+            if (!newprofile2.getBioinformation().equals(profiledto.bioinformation)) {
+                newprofile2.setBioinformation(profiledto.bioinformation);
+            }} else {
+                newprofile2.setBioinformation(profiledto.bioinformation);
+            }
 
-       ProfileDto newprofile3 = ProfileDto.fromProfile(repos.save(newprofile2));
 
-        return newprofile3;
+        if (newprofile2.getProfileimage() != null) {
+            if (!newprofile2.getProfileimage().equals(profiledto.profileimage)) {
+                newprofile2.setProfileimage(profiledto.profileimage);
+            }}else{
+            newprofile2.setProfileimage(profiledto.profileimage);
+        }
+            if (!newprofile2.getType().equals(profiledto.type)) {
+                newprofile2.setType(profiledto.type);
+            }
+
+            ProfileDto newprofile3 = ProfileDto.fromProfile(repos.save(newprofile2));
+
+            return newprofile3;
+
 
     }
-
 }

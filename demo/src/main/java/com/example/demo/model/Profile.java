@@ -28,7 +28,7 @@ public class Profile {
     private String profileimage;
 
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     @JsonIgnore
     private List<ProfiletoProfile> friendlist;
 
