@@ -84,14 +84,14 @@ public class CommentService {
 
 
 
-    public void deleteCommentbyid(long commentid) {
+    public void deleteCommentbyid(long commentid, String username) {
         Optional<Comment> comment1 = repos.findById(commentid);
         if (comment1.isEmpty()) {
             throw new RecordNotFoundException("Cannot find id:" + commentid);
         } else {
             Comment comment2 = repos.findById(commentid).get();
-            User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String username = principal.getUsername();
+           // String username = SecurityContextHolder.getContext().getAuthentication().getName();
+           // String usernameame = principal.getUsername();
             if (username.equals(comment2.getCommentmaker().getUser().getUsername()) || username.equals(comment2.getPost().getProfile().getUser().getUsername())) {
                 repos.deleteById(commentid);
             }

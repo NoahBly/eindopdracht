@@ -202,18 +202,16 @@ public class ProfileService {
 
 
     public ProfileDto updateProfile(long profileid, ProfileDto profiledto) {
-        ProfileDto newprofile = getProfilebyID(profileid);
-        Profile newprofile2 = ProfileInputDto.toProfile(newprofile);
+        Profile newprofile2 = repos.findById(profileid).get();
+
 
         if(profiledto.name!=null && !newprofile2.getName().equals(profiledto.name)) {
             newprofile2.setName(profiledto.name);
         }
 
-
-        if(profiledto.bioinformation != null && newprofile2.getBioinformation() != null && !newprofile2.getBioinformation().equals(profiledto.bioinformation)) {
-            newprofile2.setBioinformation(profiledto.bioinformation);
-        }
-        else{newprofile2.setBioinformation(profiledto.bioinformation);}
+         if(profiledto.bioinformation != null) {
+             newprofile2.setBioinformation(profiledto.bioinformation);
+         }
 
         if(profiledto.followerslist!= null && !newprofile2.getFollowerslist().equals(profiledto.followerslist)) {
             List<ProfiletoProfile2> followerList = new ArrayList<>();
@@ -251,10 +249,9 @@ public class ProfileService {
             newprofile2.setPosts(posts);
         }
 
-        if(newprofile2.getProfileimage() != null) {
-        if(!newprofile2.getProfileimage().equals(profiledto.profileimage)) {
+        if(profiledto.profileimage != null) {
             newprofile2.setProfileimage(profiledto.profileimage);
-        }}else {newprofile2.setProfileimage(profiledto.profileimage);}
+        }
 
         if(profiledto.type != null && !newprofile2.getType().equals(profiledto.type)) {
             newprofile2.setType(profiledto.type);

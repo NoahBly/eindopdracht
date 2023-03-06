@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -51,8 +52,8 @@ public class CommentController {
 
 
     @DeleteMapping(value = "/{commentid}")
-    public ResponseEntity<Object> deleteCommentbyID(@PathVariable("commentid") long id) {
-        service.deleteCommentbyid(id);
+    public ResponseEntity<Object> deleteCommentbyID(@PathVariable("commentid") long id, Principal principal) {
+        service.deleteCommentbyid(id, principal.getName());
         return ResponseEntity.noContent().build();
     }
 
