@@ -90,7 +90,7 @@ public class SpringSecurityConfig  {
                .antMatchers(HttpMethod.GET,"/friendrequests/{friendrequestid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
                .antMatchers(HttpMethod.GET,"/friendrequests/profile/{profileid}").permitAll()
 
-               .antMatchers(HttpMethod.DELETE,"/friendrequests/{friendrequestid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.DELETE,"/friendrequests/{friendrequestid}").permitAll()
                .antMatchers(HttpMethod.PUT,"/friendrequests/{friendrequestid}").permitAll()
                .antMatchers(HttpMethod.GET,"/friendrequests/profile/{profileid}/friends").permitAll()
                .antMatchers(HttpMethod.DELETE,"/friendrequests/profile/{profileid}/friends/{profilefriendid}").permitAll()
@@ -98,7 +98,7 @@ public class SpringSecurityConfig  {
                .antMatchers(HttpMethod.POST,"/followrequests/create/{makerid}/{receiverid}").permitAll()
                .antMatchers(HttpMethod.GET,"/followrequests/{followrequestid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
                .antMatchers(HttpMethod.GET,"/followrequests/profile/{profileid}").permitAll()
-               .antMatchers(HttpMethod.DELETE,"/followrequests/{followrequestid}").hasAnyRole("ROLE_NORMAL_USER","ROLE_CELEB_USER","ROLE_PAGE_ADMIN_USER","ADMIN")
+               .antMatchers(HttpMethod.DELETE,"/followrequests/{followrequestid}").permitAll()
                .antMatchers(HttpMethod.PUT,"/followrequests/{followrequestid}").permitAll()
                .antMatchers(HttpMethod.GET,"/followrequests/profile/{profileid}/followers").permitAll()
                .antMatchers(HttpMethod.GET,"/followrequests/profile/{profileid}/followings").permitAll()
