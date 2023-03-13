@@ -151,11 +151,11 @@ public class FriendrequestService {
     }
 
     public void deleteFriendbyID(long id, long id2) {
-        List<ProfiletoProfileDto> Friendlist = getAllFriendsbyProfileID(id);
-        List<ProfiletoProfile>Friendlist2 = new ArrayList<>();
-        for(ProfiletoProfileDto profile: Friendlist) {
-            Friendlist2.add(ProfiletoProfileDto.toP2P(profile));
-        }
+//        List<ProfiletoProfileDto> Friendlist = getAllFriendsbyProfileID(id);
+//        List<ProfiletoProfile>Friendlist2 = new ArrayList<>();
+//        for(ProfiletoProfileDto profile: Friendlist) {
+//            Friendlist2.add(ProfiletoProfileDto.toP2P(profile));
+//        }
 
         Optional<ProfiletoProfile> profiletoprofile1 = repos4.findById(id2);
         if (profiletoprofile1.isEmpty()) {

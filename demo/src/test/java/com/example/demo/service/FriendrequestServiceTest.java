@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.FriendrequestDto;
 import com.example.demo.dto.ProfileDto;
+import com.example.demo.dto.ProfiletoProfileDto;
 import com.example.demo.exceptions.RecordNotFoundException;
 import com.example.demo.model.Friendrequest;
 import com.example.demo.model.Profile;
@@ -84,8 +85,8 @@ class FriendrequestServiceTest {
 
         receiver1 = new Profile(3,"NORMAL","jantje",null, friendlist2,null,friendrequests,null,null,null,null,null,user2);
         friendrequest2 = new Friendrequest(4,maker1,receiver1);
-    ptp1 = new ProfiletoProfile(5L,maker1,receiver1,ptp2);
-    ptp2 = new ProfiletoProfile(6L,receiver1,maker1,ptp1);
+    ptp1 = new ProfiletoProfile(5,maker1,receiver1,ptp2);
+    ptp2 = new ProfiletoProfile(6,receiver1,maker1,ptp1);
 
 
     }
@@ -239,9 +240,43 @@ class FriendrequestServiceTest {
 
     @Test
     void getAllFriendsbyProfileID() {
+        long profileidreceiver = 3;
+
+        when(repos2.findById(profileidreceiver)).thenReturn(Optional.ofNullable(receiver1));
+
+        List<ProfiletoProfileDto> friendlist = new ArrayList<>(friendrequestService.getAllFriendsbyProfileID(profileidreceiver));
+
+        List<ProfiletoProfile> friendlist2 = new ArrayList<>(receiver1.getFriendlist());
+        List<ProfiletoProfileDto> friendlist2dto = new ArrayList<>();
+
+        for (ProfiletoProfile p2p : friendlist2) {
+            friendlist2dto.add(ProfiletoProfileDto.fromP2P(p2p));
+        }
+
+        assertEquals(friendlist2dto,friendlist);
+    }
+
+    @Test
+    void getAllFriendsbyProfileIDThrowsExceptionTest() {
+        assertThrows(RecordNotFoundException.class, () -> friendrequestService.getAllFriendsbyProfileID(1l));
     }
 
     @Test
     void deleteFriendbyID() {
+        long p2pid = ptp1.getId();
+        long profileid = maker1.getId();
+
+        when(repos4.findById(p2pid)).thenReturn(Optional.ofNullable(ptp1));
+
+        friendrequestService.deleteFriendbyID(profileid, ptp1.getId());
+
+        verify(repos4).delete(ptp1);
+
+
+    }
+
+    @Test
+    void deleteFriendbyIDThrowsExceptionTest() {
+        assertThrows(RecordNotFoundException.class, () -> friendrequestService.deleteFriendbyID(1l,1l));
     }
 }

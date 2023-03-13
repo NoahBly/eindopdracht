@@ -22,7 +22,7 @@ public class ProfiletoProfile {
     @JsonIgnore
     private ProfiletoProfile otherside;
 
-    public ProfiletoProfile(Long id, Profile user, Profile friend, ProfiletoProfile otherside) {
+    public ProfiletoProfile(long id, Profile user, Profile friend, ProfiletoProfile otherside) {
         this.id = id;
         this.user = user;
         this.friend = friend;
@@ -32,11 +32,11 @@ public class ProfiletoProfile {
     public ProfiletoProfile() {
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
