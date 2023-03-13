@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class ProfiletoProfile3 {
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "profile_id")

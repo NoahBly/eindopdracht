@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class ProfiletoProfile {
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "profile_id")
@@ -21,6 +21,16 @@ public class ProfiletoProfile {
     @OneToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     private ProfiletoProfile otherside;
+
+    public ProfiletoProfile(Long id, Profile user, Profile friend, ProfiletoProfile otherside) {
+        this.id = id;
+        this.user = user;
+        this.friend = friend;
+        this.otherside = otherside;
+    }
+
+    public ProfiletoProfile() {
+    }
 
     public Long getId() {
         return id;

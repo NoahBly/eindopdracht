@@ -49,7 +49,9 @@ class FriendrequestServiceTest {
     FriendrequestService friendrequestService;
 
     @Captor
-    ArgumentCaptor<Friendrequest> captor;
+    ArgumentCaptor<Profile> makercaptor;
+
+
 
     Profile maker1;
     Profile receiver1;
@@ -59,12 +61,21 @@ class FriendrequestServiceTest {
 
     User user2;
 
+    ProfiletoProfile ptp1;
+
+    ProfiletoProfile ptp2;
+
+    ProfiletoProfile ptp1b;
+
+    ProfiletoProfile ptp2b;
+
 
     @BeforeEach
     void setUp() {
        List <ProfiletoProfile> friendlist = new ArrayList<>();
         List <Friendrequest> friendrequests =new ArrayList<>();
-        friendrequest2 = new Friendrequest(4,maker1,receiver1);
+
+
 
 
         maker1 = new Profile(1,"NORMAL","keesjan",null, friendlist,null,null,null,null,null,null,null, user1);
@@ -72,6 +83,11 @@ class FriendrequestServiceTest {
         List <ProfiletoProfile> friendlist2 = new ArrayList<>();
 
         receiver1 = new Profile(3,"NORMAL","jantje",null, friendlist2,null,friendrequests,null,null,null,null,null,user2);
+        friendrequest2 = new Friendrequest(4,maker1,receiver1);
+    ptp1 = new ProfiletoProfile(5L,maker1,receiver1,ptp2);
+    ptp2 = new ProfiletoProfile(6L,receiver1,maker1,ptp1);
+
+
     }
 
     @AfterEach
@@ -183,7 +199,42 @@ class FriendrequestServiceTest {
 
     @Test
     void acceptFriendrequestbyID() {
+        long friendrequestid = 4;
 
+
+        when(repos.findById(friendrequestid)).thenReturn(Optional.ofNullable(friendrequest2));
+       lenient().when(repos4.save(ptp1)).thenReturn(ptp1);
+       lenient().when(repos4.save(ptp2)).thenReturn(ptp2);
+
+        List<ProfiletoProfile> friendlist = maker1.getFriendlist();
+
+        friendlist.add(ptp1);
+
+        maker1.setFriendlist(friendlist);
+
+        when(repos2.save(maker1)).thenReturn(maker1);
+
+
+        List<ProfiletoProfile> friendlist2 = receiver1.getFriendlist();
+
+        friendlist2.add(ptp2);
+
+        receiver1.setFriendlist(friendlist);
+
+        when(repos2.save(receiver1)).thenReturn(receiver1);
+
+        friendrequestService.acceptFriendrequestbyID(friendrequestid);
+        verify(repos2, times(2)).save(makercaptor.capture());
+
+        List<Profile> capturedProfiles = makercaptor.getAllValues();
+        assertEquals(maker1.getFriendlist(), capturedProfiles.get(0).getFriendlist());
+        assertEquals(receiver1.getFriendlist(), capturedProfiles.get(1).getFriendlist());
+
+    }
+
+    @Test
+    void acceptFriendrequestbyIDThrowsExceptionTest() {
+        assertThrows(RecordNotFoundException.class, () -> friendrequestService.acceptFriendrequestbyID(1l));
     }
 
     @Test
