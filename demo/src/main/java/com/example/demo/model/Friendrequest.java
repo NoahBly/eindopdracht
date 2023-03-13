@@ -27,6 +27,8 @@ public class Friendrequest {
         this.receiver = receiver;
     }
 
+
+
     public long getId() {
         return id;
     }

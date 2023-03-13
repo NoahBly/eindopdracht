@@ -65,6 +65,25 @@ public class Profile {
     //@JoinColumn(name = "profile_id", insertable=false, updatable=false)
     private User user;
 
+    public Profile(long id, String type, String name, String profileimage, List<ProfiletoProfile> friendlist, List<Followrequest> followrequests, List<Friendrequest> friendrequests, List<ProfiletoProfile2> followerslist, List<ProfiletoProfile3> followinglist, String bioinformation, List<Post> posts, List<Comment> commentposts, User user) {
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.profileimage = profileimage;
+        this.friendlist = friendlist;
+        this.followrequests = followrequests;
+        this.friendrequests = friendrequests;
+        this.followerslist = followerslist;
+        this.followinglist = followinglist;
+        this.bioinformation = bioinformation;
+        this.posts = posts;
+        this.commentposts = commentposts;
+        this.user = user;
+    }
+
+    public Profile() {
+    }
+
     public List<Followrequest> getFollowrequests() {
         return followrequests;
     }
