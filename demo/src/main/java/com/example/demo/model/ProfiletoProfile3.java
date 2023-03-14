@@ -23,6 +23,15 @@ public class ProfiletoProfile3 {
     @JsonIgnore
     private ProfiletoProfile2 otherside;
 
+    public ProfiletoProfile3(long id, Profile user, Profile friend, ProfiletoProfile2 otherside) {
+        this.id = id;
+        this.user = user;
+        this.friend = friend;
+        this.otherside = otherside;
+    }
+
+    public ProfiletoProfile3() {
+    }
 
     public Long getId() {
         return id;
