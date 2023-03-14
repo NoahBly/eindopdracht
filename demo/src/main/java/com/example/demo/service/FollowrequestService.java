@@ -157,11 +157,11 @@ public class FollowrequestService {
 
 
     public void deleteFollowerbyID(long id, long id2) {
-        List<ProfiletoProfile2Dto> Followerslist = getAllFollowersbyProfileID(id);
-        List<ProfiletoProfile2> Followerslist2 = new ArrayList<>();
-        for(ProfiletoProfile2Dto profile: Followerslist) {
-            Followerslist2.add(ProfiletoProfile2Dto.toP2P(profile));
-        }
+//        List<ProfiletoProfile2Dto> Followerslist = getAllFollowersbyProfileID(id);
+//        List<ProfiletoProfile2> Followerslist2 = new ArrayList<>();
+//        for(ProfiletoProfile2Dto profile: Followerslist) {
+//            Followerslist2.add(ProfiletoProfile2Dto.toP2P(profile));
+//        }
 
         Optional<ProfiletoProfile2> profiletoprofile1 = repos4.findById(id2);
         if (profiletoprofile1.isEmpty()) {
@@ -204,11 +204,11 @@ public class FollowrequestService {
 
 
     public void deleteFollowingbyID(long id, long id2) {
-        List<ProfiletoProfile3Dto> Followinglist = getAllFollowingsbyProfileID(id);
-        List<ProfiletoProfile3> Followinglist2 = new ArrayList<>();
-        for(ProfiletoProfile3Dto profile: Followinglist) {
-            Followinglist2.add(ProfiletoProfile3Dto.toP2P(profile));
-        }
+//        List<ProfiletoProfile3Dto> Followinglist = getAllFollowingsbyProfileID(id);
+//        List<ProfiletoProfile3> Followinglist2 = new ArrayList<>();
+//        for(ProfiletoProfile3Dto profile: Followinglist) {
+//            Followinglist2.add(ProfiletoProfile3Dto.toP2P(profile));
+//        }
 
         Optional<ProfiletoProfile3> profiletoprofile1 = repos5.findById(id2);
         if (profiletoprofile1.isEmpty()) {

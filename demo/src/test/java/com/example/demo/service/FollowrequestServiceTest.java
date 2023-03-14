@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.FollowrequestDto;
-import com.example.demo.dto.FriendrequestDto;
+import com.example.demo.dto.*;
 import com.example.demo.exceptions.RecordNotFoundException;
 import com.example.demo.model.*;
 import com.example.demo.repository.*;
@@ -21,8 +20,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class FollowrequestServiceTest {
 
@@ -37,6 +35,7 @@ class FollowrequestServiceTest {
     FollowrequestRepository repos;
     @Mock
     ProfiletoProfile2Repository repos4;
+    @Mock
     ProfiletoProfile3Repository repos5;
 
     @InjectMocks
@@ -190,21 +189,123 @@ class FollowrequestServiceTest {
 
     @Test
     void acceptFollowrequestbyID() {
+
+        long followrequestid = 4;
+
+
+        when(repos.findById(followrequestid)).thenReturn(Optional.ofNullable(followrequest2));
+        lenient().when(repos5.save(ptp1)).thenReturn(ptp1);
+        lenient().when(repos4.save(ptp2)).thenReturn(ptp2);
+
+        List<ProfiletoProfile2> followerslist = receiver1.getFollowerslist();
+
+        followerslist.add(ptp2);
+
+        receiver1.setFollowerslist(followerslist);
+
+        when(repos2.save(receiver1)).thenReturn(receiver1);
+
+
+        List<ProfiletoProfile3> followingslist = maker1.getFollowinglist();
+
+        followingslist.add(ptp1);
+
+        maker1.setFollowinglist(followingslist);
+
+        when(repos2.save(maker1)).thenReturn(maker1);
+
+        followrequestService.acceptFollowrequestbyID(followrequestid);
+        verify(repos2, times(2)).save(makercaptor.capture());
+
+        List<Profile> capturedProfiles = makercaptor.getAllValues();
+        assertEquals(receiver1.getFollowerslist(), capturedProfiles.get(0).getFollowerslist());
+        assertEquals(maker1.getFollowinglist(), capturedProfiles.get(1).getFollowinglist());
+
     }
 
+    @Test
+    void acceptFollowrequestbyIDThrowsExceptionTest() {
+        assertThrows(RecordNotFoundException.class, () -> followrequestService.acceptFollowrequestbyID(1l));
+    }
     @Test
     void getAllFollowersbyProfileID() {
+        long profileidreceiver = 3;
+
+        when(repos2.findById(profileidreceiver)).thenReturn(Optional.ofNullable(receiver1));
+
+        List<ProfiletoProfile2Dto> followerslist = new ArrayList<>(followrequestService.getAllFollowersbyProfileID(profileidreceiver));
+
+        List<ProfiletoProfile2> followerslist2 = new ArrayList<>(receiver1.getFollowerslist());
+        List<ProfiletoProfile2Dto> followerslist2dto = new ArrayList<>();
+
+        for (ProfiletoProfile2 p2p : followerslist2) {
+            followerslist2dto.add(ProfiletoProfile2Dto.fromP2P(p2p));
+        }
+
+        assertEquals(followerslist2dto,followerslist);
     }
 
     @Test
+    void getAllFollowersbyProfileIDThrowsExceptionTest() {
+        assertThrows(RecordNotFoundException.class, () -> followrequestService.getAllFollowersbyProfileID(1l));
+    }
+    @Test
     void deleteFollowerbyID() {
+        long p2pid = ptp2.getId();
+        long profileid = receiver1.getId();
+
+        when(repos4.findById(p2pid)).thenReturn(Optional.ofNullable(ptp2));
+
+        followrequestService.deleteFollowerbyID(profileid, ptp2.getId());
+
+        verify(repos4).delete(ptp2);
+
+    }
+
+    @Test
+    void deleteFollowerbyIDThrowsExceptionTest() {
+        assertThrows(RecordNotFoundException.class, () -> followrequestService.deleteFollowerbyID(1l,1l));
     }
 
     @Test
     void getAllFollowingsbyProfileID() {
+
+        long profileidreceiver = 1;
+
+        when(repos2.findById(profileidreceiver)).thenReturn(Optional.ofNullable(maker1));
+
+        List<ProfiletoProfile3Dto> followingsslist = new ArrayList<>(followrequestService.getAllFollowingsbyProfileID(profileidreceiver));
+
+        List<ProfiletoProfile3> followingslist2 = new ArrayList<>(maker1.getFollowinglist());
+        List<ProfiletoProfile3Dto> followingslist3dto = new ArrayList<>();
+
+        for (ProfiletoProfile3 p2p : followingslist2) {
+            followingslist3dto.add(ProfiletoProfile3Dto.fromP2P(p2p));
+        }
+
+        assertEquals(followingslist3dto,followingsslist);
+    }
+
+    @Test
+    void getAllFollowingsbyProfileIDThrowsExceptionTest() {
+        assertThrows(RecordNotFoundException.class, () -> followrequestService.getAllFollowingsbyProfileID(1l));
     }
 
     @Test
     void deleteFollowingbyID() {
+
+        long p2pid = ptp1.getId();
+        long profileid = maker1.getId();
+
+        when(repos5.findById(p2pid)).thenReturn(Optional.ofNullable(ptp1));
+
+        followrequestService.deleteFollowingbyID(profileid, ptp1.getId());
+
+        verify(repos5).delete(ptp1);
+    }
+
+    @Test
+    void deleteFollowingbyIDThrowsExceptionTest() {
+        assertThrows(RecordNotFoundException.class, () -> followrequestService.deleteFollowingbyID(1l,1l));
     }
 }
