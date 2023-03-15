@@ -23,6 +23,21 @@ public class CommentDto {
     @NotBlank
     public Profile commentmaker;
 
+    public CommentDto(long id, String comment, Post post, Profile commentmaker) {
+        this.id = id;
+        this.comment = comment;
+        this.post = post;
+        this.commentmaker = commentmaker;
+    }
+
+    public CommentDto() {
+    }
+
+    public CommentDto(String comment, Post post, Profile commentmaker) {
+        this.comment = comment;
+        this.post = post;
+        this.commentmaker = commentmaker;
+    }
 
     public static CommentDto fromComment(Comment comment1) {
         CommentDto comment2 = new CommentDto();

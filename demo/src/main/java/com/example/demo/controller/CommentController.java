@@ -26,7 +26,7 @@ public class CommentController {
     @PostMapping(value = "/post/{postid}/profile/{profileidmaker}")
     public ResponseEntity<Object> createComment(@PathVariable ("postid") long postid, @PathVariable("profileidmaker") Long profileidmaker, @RequestBody CommentDto dto) throws Exception{
 
-        long commentid = service.createComment(dto,postid,profileidmaker);
+        Long commentid = service.createComment(dto,postid,profileidmaker);
 
         return new ResponseEntity<>(commentid, HttpStatus.CREATED);
 

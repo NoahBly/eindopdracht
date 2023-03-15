@@ -21,7 +21,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "commentmaker_id", referencedColumnName = "id")
-    @JsonIgnore
+
     private Profile commentmaker;
 
 

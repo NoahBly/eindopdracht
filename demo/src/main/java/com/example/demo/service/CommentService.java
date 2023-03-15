@@ -32,7 +32,7 @@ public class CommentService {
         this.repos3 = repos3;
     }
 
-    public long createComment(CommentDto commentdto, long postid, long profilemakerid ) {
+    public Long createComment(CommentDto commentdto, long postid, long profilemakerid ) {
         Comment comment1 = new Comment();
         Post post1 = repos2.findById(postid).get();
         Profile commentmaker =repos3.findById(profilemakerid).get();
