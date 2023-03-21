@@ -1,6 +1,9 @@
 package com.example.demo.model;
 
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,10 +15,12 @@ public class Followrequest {
     private long id;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile maker;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "receiver_id", referencedColumnName = "id")
     private Profile receiver;
 

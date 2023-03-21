@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -12,10 +14,12 @@ public class ProfiletoProfile2 {
     private long id;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "profile_id")
     private Profile user;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Profile friend;
 
 

@@ -34,6 +34,7 @@ public class Profile {
 
     @OneToMany(mappedBy = "receiver")
     @JsonIgnore
+
     private List<Followrequest> followrequests;
 
     @OneToMany(mappedBy = "receiver")
