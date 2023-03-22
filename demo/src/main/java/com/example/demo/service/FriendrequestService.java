@@ -131,6 +131,7 @@ public class FriendrequestService {
             friendlist2.add(proftoprof2);
             receiver.setFriendlist(friendlist2);
             repos2.save(receiver);
+            repos.deleteById(id);
         }
     }
 

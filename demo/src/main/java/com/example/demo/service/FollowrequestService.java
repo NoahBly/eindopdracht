@@ -133,6 +133,7 @@ public class FollowrequestService {
 
             maker.setFollowinglist(followinglist2);
             repos2.save(maker);
+            repos.deleteById(id);
 
         }
     }
