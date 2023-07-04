@@ -18,3 +18,11 @@ UPDATE profiles SET user_id=1004 WHERE id = 1005;
 
 INSERT INTO authorities (username,authority) VALUES ('John', 'ROLE_CELEB_USER');
 INSERT INTO users_authorities (user_id,authorities_authority,authorities_username) VALUES (1004, 'ROLE_CELEB_USER', 'John');
+
+
+INSERT INTO profiles (id,name, profileimage, bioinformation) VALUES (1007,'Jan','riza-aguasin-escapismart.jpg', 'test');
+INSERT INTO users (id,username, password, email, profile_id) VALUES (1006,'Jan', '$2a$12$E/psue6KVnG/z5BLBJEPYeI9Kxy6KXzLcb0XDyQUGVl4UzSX3Xfta','jan@testy.com',1007); -- password is 1234567
+UPDATE profiles SET user_id=1006 WHERE id = 1007;
+
+INSERT INTO authorities (username,authority) VALUES ('Jan', 'ROLE_PAGE_ADMIN_USER');
+INSERT INTO users_authorities (user_id,authorities_authority,authorities_username) VALUES (1006, 'ROLE_PAGE_ADMIN_USER', 'Jan');
