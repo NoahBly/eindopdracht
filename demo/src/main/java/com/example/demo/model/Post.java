@@ -19,7 +19,7 @@ public class Post {
     @Column(unique = false)
     private String imagevideo;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Comment> comments;
 
